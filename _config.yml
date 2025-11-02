@@ -1,0 +1,68 @@
+# Site settings
+title: "Wen Chao's Research Homepage"
+description: "Personal academic webpage and research portfolio"
+baseurl: ""
+url: "https://wenchao.github.io"
+
+# Personal info
+author:
+  name: "Wen Chao"
+  title: "Researcher"
+  email: "your.email@university.edu"
+  affiliation: "Your University"
+  department: "Department of Your Field"
+
+# Social links
+social:
+  google_scholar: "https://scholar.google.com/citations?user=YOUR_ID"
+  orcid: "https://orcid.org/YOUR-ORCID-ID"
+  github: "https://github.com/wenchao"
+  linkedin: "https://linkedin.com/in/yourprofile"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Collections
+collections:
+  publications:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "publications"
+    values:
+      layout: "publication"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - README.md
+
+# SEO settings
+twitter:
+  username: your_twitter
+  card: summary
+
+facebook:
+  app_id: ""
+  publisher: ""
+  admins: ""
+
+logo: "/assets/images/profile-photo.jpg"

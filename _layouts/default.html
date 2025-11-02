@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% seo %}
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <nav class="navbar">
+          <div class="nav-brand">
+            <a href="{{ "/" | absolute_url }}">{{ site.author.name }}</a>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="{{ "/" | absolute_url }}">Home</a></li>
+            <li><a href="{{ "/#about" | absolute_url }}">About</a></li>
+            <li><a href="{{ "/#research" | absolute_url }}">Research</a></li>
+            <li><a href="{{ "/#publications" | absolute_url }}">Publications</a></li>
+            <li><a href="{{ "/#cv" | absolute_url }}">CV</a></li>
+            <li><a href="{{ "/#contact" | absolute_url }}">Contact</a></li>
+          </ul>
+          <div class="nav-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      {{ content }}
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; {{ "now" | date: "%Y" }} {{ site.author.name }}. All rights reserved.</p>
+        <div class="social-links">
+          {% if site.social.google_scholar %}
+            <a href="{{ site.social.google_scholar }}" target="_blank" rel="noopener noreferrer">
+              <i class="fas fa-graduation-cap"></i>
+            </a>
+          {% endif %}
+          {% if site.social.orcid %}
+            <a href="{{ site.social.orcid }}" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-orcid"></i>
+            </a>
+          {% endif %}
+          {% if site.social.github %}
+            <a href="{{ site.social.github }}" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-github"></i>
+            </a>
+          {% endif %}
+          {% if site.social.linkedin %}
+            <a href="{{ site.social.linkedin }}" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ "/assets/js/main.js" | relative_url }}"></script>
+  </body>
+</html>
