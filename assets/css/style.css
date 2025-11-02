@@ -685,7 +685,7 @@ a:hover {
 }
 
 .news-toggle .fa-chevron-up {
-  transform: rotate(180deg);
+  /* No rotation needed - chevron-up already points up */
 }
 
 /* Responsive Design for News */
