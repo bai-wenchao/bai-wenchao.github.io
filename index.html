@@ -29,7 +29,7 @@ layout: default
         <p>
           I am a {{ site.author.title }} at {{ site.author.affiliation }},
           working in the {{ site.author.department }} since September 2022,
-          advised by <a href="https://jujuhoo.github.io/" target="_blank">A.P. Jiahui Jin</a>.
+          advised by <a href="https://jujuhoo.github.io/" target="_blank">A.Prof. Jiahui Jin</a>.
           From July 2023, I am also a research intern at Shenzhen Institute of Computing Sciences,
           honorably advised by <a href="https://homepages.inf.ed.ac.uk/wenfei/" target="_blank">Prof. Wenfei Fan</a> and collaborating with
           <a href="https://shuhaoliu.github.io/#gsc.tab=0" target="_blank">Dr. Shuhao Liu</a>,
@@ -71,12 +71,12 @@ layout: default
 
 <section id="publications" class="section">
   <div class="container">
-    <h2 class="section-title">Selected Publications</h2>
+    <h2 class="section-title">Publications</h2>
     <div class="publications-list">
       <div class="publication-item">
         <div class="publication-content">
           <p class="publication-authors">
-            <strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, Zihuan Xu.
+            <strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, and Jiahui Jin*.
           </p>
           <h3>Rule-Based Graph Cleaning with GPUs on a Single Machine</h3>
           <p class="publication-venue">
@@ -86,9 +86,9 @@ layout: default
             This paper studies cost-effective graph cleaning with a single machine. We adopt a rule-based method that may embed machine learning models as predicates in the rules. Graph cleaning with the rules involves rule discovery, error detection and correction. These tasks are both computation-heavy and I/O-intensive as they repeatedly invoke costly graph pattern matching, and produce a large amount of a large volume of intermediate results, among other things. In light of these, no existing single-machine system is able to carry out these tasks even on not-too-large graphs, even using GPUs. Thus we develop MiniClean, a single-machine system for cleaning large graphs. It proposes (1) a workflow that better fits a single machine by pipelining CPU, GPU and I/O operations; (2) memory footprint reduction with bundled processing and data compression; and (3) a multi-mode parallel model for SIMD, pipelined and independent parallelism, and their scheduling to maximize CPU--GPU synergy. Using real-life graphs, we empirically verify that MiniClean outperforms the SOTA single-machine systems by at least 65.34X and multi-machine systems with 32 nodes by at least 8.09X.
           </p>
           <div class="publication-links">
-            <a href="/assets/files/publications/25_sigmod_miniclean/paper-full.pdf" class="btn btn-small">Paper</a>
-            <a href="/assets/files/publications/25_sigmod_miniclean/slides.pdf" class="btn btn-small">Slides</a>
-            <a href="/assets/files/publications/25_sigmod_miniclean/poster.pdf" class="btn btn-small">Poster</a>
+            <a href="/assets/files/publications/25_miniclean/paper-full.pdf" class="btn btn-small">Paper</a>
+            <a href="/assets/files/publications/25_miniclean/slides.pdf" class="btn btn-small">Slides</a>
+            <a href="/assets/files/publications/25_miniclean/poster.pdf" class="btn btn-small">Poster</a>
             <a href="https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general" class="btn btn-small">Docker Image</a>
             <button class="btn btn-small" onclick="copyToClipboard(`@article{miniclean_sigmod25,
   title={Rule-Based Graph Cleaning with GPUs on a Single Machine},
@@ -107,20 +107,27 @@ layout: default
       <div class="publication-item">
         <div class="publication-content">
           <p class="publication-authors">
-            Collaborators, <strong>Wenchao Bai</strong>, et al.
+            <strong>Wenchao Bai</strong>, Wenfei Fan, Jiahui Jin, Daji Li, Jian Li, Shuhao Liu, Mingliang Ouyang, and Qiang Yuan.
           </p>
-          <h3>Computational Methods for Single-Cell Transcriptome Analysis</h3>
+          <h3>MiniClean: A Single-Machine System for Cleaning Big Graphs</h3>
           <p class="publication-venue">
-            <em>Genome Biology</em>, 2023
+            <em>SIGMOD Demo Proposals, 2025</em>, 2023
           </p>
           <p class="publication-abstract">
-            This work introduces new computational frameworks for analyzing single-cell RNA sequencing data,
-            enabling better understanding of cellular heterogeneity in complex tissues.
+            We demonstrate MiniClean, a single-machine system for cleaning large-scale graphs. MiniClean adopts a rule-based approach that unifies logic reasoning and machine learning, and supports rule discovery, error detection and error correction. To cope with repeated graph pattern matching and large intermediate results, MiniClean proposes (1) a pipelined workflow that coordinates CPU, GPU and I/O operations, (2) memory footprint reduction by bundled processing and data compression, and (3) a multi-mode parallel model that combines SIMD, pipelined, and independent parallelism to maximize CPU--GPU synergy. We demonstrate how MiniClean cleans real-life billion-scale graphs and outperforms a SOTA multi-machine system with a 32-node cluster by at least 8.09X.
           </p>
           <div class="publication-links">
-            <a href="#" class="btn btn-small">PDF</a>
-            <a href="#" class="btn btn-small">Code</a>
-            <a href="#" class="btn btn-small">BibTeX</a>
+            <a href="/assets/files/publications/25_miniclean_demo/paper.pdf" class="btn btn-small">Paper</a>
+            <a href="/assets/files/publications/25_miniclean/slides.pdf" class="btn btn-small">Slides</a>
+            <a href="/assets/files/publications/25_miniclean/poster.pdf" class="btn btn-small">Poster</a>
+            <a href="https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general" class="btn btn-small">Docker Image</a>
+            <button class="btn btn-small" onclick="copyToClipboard(`@inproceedings{miniclean_sigmod_demo25,
+  title={MiniClean: A Single-Machine System for Cleaning Big Graphs},
+  author={Bai, Wenchao and Fan, Wenfei and Jin, Jiahui and Li, Daji and Li, Jian and Liu, Shuhao and Ouyang, Mingliang and Yuan, Qiang},
+  booktitle={Companion of the 2025 International Conference on Management of Data},
+  pages={27--30},
+  year={2025}
+}`)">BibTeX</button>
           </div>
         </div>
       </div>
