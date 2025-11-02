@@ -186,13 +186,13 @@ layout: default
           </p>
           <p class="publication-abstract">
             Academic database (DB) research must pivot from marginal RDBMS gains ("polishing a round ball") to find the "New Chalice of Data," driven by the massive shift in funding toward AI (>$100B VC funding). Modern Query Engines must evolve away from the closed-world assumption, SQL, and relational data to embrace unstructured multi-modal data and Natural Language queries in an open-world model, shifting core capability from retrieval to reasoning.
-            <br><br>
+            <br><br><br>
             This abstract outlines "The Onion Framework" (Neural ◦ Symbolic ◦ Neural) for integrating and optimizing Large Language Model (LLM)-powered data processing.
-            <br><br>
+            <br><br><br>
             The Symbolic ◦ Neural approach focuses on steering LLM queries via explicit control under declarative frameworks (e.g., Palimpzest, ELEET). Effectiveness is enhanced using prompt engineering strategies, such as fine-grained methods for accuracy and leveraging non-LLM proxies (like k-NN) to reduce token consumption by 50%. Efficiency optimization utilizes model cascades (BARGAIN), proxy-based approximation (LOTUS), and unbiased stratified sampling for aggregation queries (UQE). These methods require user-specified logic flow.
-            <br><br>
+            <br><br><br>
             The Neural ◦ Symbolic ◦ Neural approach focuses on automatically manipulating symbols to improve accessibility by converting Natural Language queries into formal query plans (NL2SQL) using progressive matching. Optimization strategies include exploiting independent parallelism (AOP), cost-based optimization using importance sampling for cardinality estimation (Unify), and online plan adjustment and fault tolerance (iDataLake).
-            <br><br>
+            <br><br><br>
             Ultimately, database researchers are uniquely positioned to address LLM challenges (poor predictability, undefined correctness). Our competitive advantage lies in fundamental principles such as declarativeness, cost-based optimization, approximation guarantees, and performance optimization.
           </p>
           <div class="post-tags">
@@ -217,7 +217,7 @@ layout: default
           </p>
           <p class="publication-abstract">
             Pessimistic Cardinality Estimation (PCE) is a core topic in database query optimization, designed to counter the fragility of standard cardinality estimation—often called the "Achilles Heel" of cost estimation. PCE addresses this by finding a guaranteed tight upper bound U such that the result size of a query |Q(D)| is always less than or equal to U for any database instance D consistent with available statistics. This provides a valuable one-sided theoretical guarantee for query planning. The presentation focuses on Full Conjunctive Queries (FCQs) and uses statistics that adhere to the locality desideratum, meaning they are computed independently on each relation. 
-            <br><br>
+            <br><br><br>
             We review the progression of PCE bounds based on the statistics utilized: the foundational AGM Bound, which uses only relation cardinalities and is provably tight; the Chain Bound, which incorporates max-degree (L-infinity-norm) statistics and outperforms AGM on acyclic queries; and the Polymatroid Bound, which integrates various Lp-norms by leveraging concepts from information theory, though it is generally not tight due to exponential inference time. The most recent advancement is the Degree Sequence Bound, which accesses the full degree sequences. This bound is provably tight for Berge-acyclic queries, is compositional, and can be computed efficiently. Performance evaluation of the state-of-the-art LpBound system confirms that PCE improves performance for expensive SQL queries but can lead to regression for computationally cheap queries. Furthermore, the utility gained from incorporating increasing amounts of Lp-norms follows the law of diminishing returns. PCE successfully provides theoretical guarantees and adheres to locality.
           </p>
           <div class="post-tags">
