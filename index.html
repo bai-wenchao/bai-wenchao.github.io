@@ -28,19 +28,17 @@ layout: default
       <div class="about-text">
         <p>
           I am a {{ site.author.title }} at {{ site.author.affiliation }},
-          working in the {{ site.author.department }}. My research focuses on
-          <strong>machine learning and artificial intelligence</strong> with applications in
-          <strong>computational biology and bioinformatics</strong>.
-        </p>
-        <p>
-          My interests include deep learning, computational biology, data science,
-          and bioinformatics. I am passionate about developing novel algorithms
-          and computational methods to solve challenging real-world problems in
-          biomedical research and healthcare.
+          working in the {{ site.author.department }} since September 2022,
+          advised by <a href="https://jujuhoo.github.io/" target="_blank">A.P. Jiahui Jin</a>.
+          From July 2023, I am also a research intern at Shenzhen Institute of Computing Sciences,
+          honorably advised by <a href="https://homepages.inf.ed.ac.uk/wenfei/" target="_blank">Prof. Wenfei Fan</a> and collaborating with
+          <a href="https://shuhaoliu.github.io/#gsc.tab=0" target="_blank">Dr. Shuhao Liu</a>,
+          <a href="https://weilongren.github.io/" target="_blank">Dr. Weilong Ren</a>, and
+          <a href="https://www.linkedin.com/in/zihuan-xu-36408ba0/?originalSubdomain=hk" target="_blank">Dr. Zihuan Xu</a>.
         </p>
         <p>
           I am always open to collaborations and discussions about research opportunities,
-          interdisciplinary projects, and applications of machine learning in life sciences.
+          interdisciplinary projects, and applications of database systems and theories in real-world scenarios.
         </p>
       </div>
     </div>
@@ -52,20 +50,20 @@ layout: default
     <h2 class="section-title">Research Interests</h2>
     <div class="research-grid">
       <div class="research-item">
-        <h3>Deep Learning</h3>
-        <p>Developing novel neural network architectures and training methods for complex pattern recognition tasks.</p>
+        <h3>Data Integration</h3>
+        <p>How to integrate external data from data lakes to enhance downstream ML model performance and SQL query quality.</p>
       </div>
       <div class="research-item">
-        <h3>Bioinformatics</h3>
-        <p>Applying machine learning techniques to analyze genomic, proteomic, and transcriptomic data.</p>
+        <h3>Data Quality</h3>
+        <p>Ensuring data quality by identifying data duplication, inconsistency, and staleness in given datasets during data integration.</p>
       </div>
       <div class="research-item">
-        <h3>Computational Biology</h3>
-        <p>Modeling complex biological systems and processes using advanced computational methods.</p>
+        <h3>High Performance Data Systems</h3>
+        <p>Building high-performance data systems for limited resources by utilizing modern hardware (GPUs), efficient algorithms, and data structures.</p>
       </div>
       <div class="research-item">
-        <h3>Multi-omics Integration</h3>
-        <p>Developing methods to integrate heterogeneous biological data for comprehensive systems biology analysis.</p>
+        <h3>Data Agent</h3>
+        <p>Building autonomous data systems in an agentic way for intelligent data management and processing.</p>
       </div>
     </div>
   </div>
@@ -78,20 +76,28 @@ layout: default
       <div class="publication-item">
         <div class="publication-content">
           <p class="publication-authors">
-            <strong>Wenchao Bai</strong>, Collaborators
+            <strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, Zihuan Xu.
           </p>
-          <h3>Deep Learning for Multi-omics Data Integration in Cancer Research</h3>
+          <h3>Rule-Based Graph Cleaning with GPUs on a Single Machine</h3>
           <p class="publication-venue">
-            <em>Nature Machine Intelligence</em>, 2024
+            <em>Proceedings of the ACM Management of Data</em>, 2025
           </p>
           <p class="publication-abstract">
-            We propose a novel deep learning framework for integrating heterogeneous multi-omics data
-            to improve cancer subtype classification and identify potential therapeutic targets.
+            This paper studies cost-effective graph cleaning with a single machine. We adopt a rule-based method that may embed machine learning models as predicates in the rules. Graph cleaning with the rules involves rule discovery, error detection and correction. These tasks are both computation-heavy and I/O-intensive as they repeatedly invoke costly graph pattern matching, and produce a large amount of a large volume of intermediate results, among other things. In light of these, no existing single-machine system is able to carry out these tasks even on not-too-large graphs, even using GPUs. Thus we develop MiniClean, a single-machine system for cleaning large graphs. It proposes (1) a workflow that better fits a single machine by pipelining CPU, GPU and I/O operations; (2) memory footprint reduction with bundled processing and data compression; and (3) a multi-mode parallel model for SIMD, pipelined and independent parallelism, and their scheduling to maximize CPU--GPU synergy. Using real-life graphs, we empirically verify that MiniClean outperforms the SOTA single-machine systems by at least 65.34X and multi-machine systems with 32 nodes by at least 8.09X.
           </p>
           <div class="publication-links">
-            <a href="#" class="btn btn-small">PDF</a>
-            <a href="#" class="btn btn-small">Code</a>
-            <a href="#" class="btn btn-small">BibTeX</a>
+            <a href="/assets/files/publications/sigmod25_miniclean/paper-full.pdf" class="btn btn-small">PDF</a>
+            <a href="https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general" class="btn btn-small">Code</a>
+            <button class="btn btn-small" onclick="copyToClipboard(`@article{miniclean_sigmod25,
+  title={Rule-Based Graph Cleaning with GPUs on a Single Machine},
+  author={Bai, Wenchao and Fan, Wenfei and Liu, Shuhao and Pang, Kehan and Zhu, Xiaoke and Jin, Jiahui},
+  journal={Proceedings of the ACM on Management of Data},
+  volume={3},
+  number={3},
+  pages={1--27},
+  year={2025},
+  publisher={ACM New York, NY, USA}
+}`)">BibTeX</button>
           </div>
         </div>
       </div>
