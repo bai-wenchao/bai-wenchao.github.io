@@ -301,6 +301,7 @@ function initializeAbstractFolding() {
         font-size: 0.9em;
         font-weight: 500;
         margin-top: 8px;
+        margin-bottom: 16px;
         display: inline-block;
         transition: color 0.2s ease;
       `;
