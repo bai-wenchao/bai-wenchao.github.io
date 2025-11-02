@@ -1,0 +1,763 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Theme settings
+\usetheme{Berlin}
+\usecolortheme{beaver}
+\setbeamertemplate{navigation symbols}{}  % Remove navigation symbols
+\setbeamertemplate{footline}[frame number]  % Show frame numbers
+
+% Packages
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ulem}
+
+\AtBeginSection[]{
+  \begin{frame}{Outline}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+% Define MIT red color
+\usepackage{xcolor}
+\definecolor{mitred}{RGB}{163, 31, 52}
+\newcommand{\mitred}[1]{{\color{mitred} #1}}
+
+% Title information
+\title{(Neural $\circ$ Symbolic $\circ$ Neural)(Everything)}
+\subtitle{The Onion Framework for Modern Query Engines}
+\author{Wenchao Bai}
+\institute{wbai@seu.edu.cn}
+\date{\today}
+
+\begin{document}
+
+% Title page
+\begin{frame}
+    \titlepage
+\end{frame}
+
+
+\section{Notes on SIGMOD Panel}
+
+
+
+
+\begin{frame}{Background: The Shifted Funding}
+Eugene Wu~et al.~\cite{wu2025doesacademicdatabaseresearch} reported the shifted funding in US:
+\vspace{1ex}
+
+\begin{itemize}
+\item {\bf DB}: \$4B NSF
+expected budget for 2026.
+\item {\bf AI}: $>$~\$100B VC funding in 2024, $>$~\$50B in Q1
+2025.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Find the New Chalice of Data (1/3): Are We Polishing a Round Ball?}
+
+\begin{block}{Where Does Academic Database Research Go From Here?}
+Continuing to improve RDBMS technology is helpful, but not necessarily competitive with industry, and the gains are increasingly marginal -- we are \underline{\bf polishing a round ball}.
+
+\vspace{2ex}
+A promising direction is AI, but while AI is ``an application of data," it doesn't seem like AI \underline{\bf needs} us.
+
+\hfill --- Eugene Wu, ACM SIGMOD Blog\footnote{\url{https://wp.sigmod.org/?p=3801}}
+\end{block}
+    
+\end{frame}
+
+
+\begin{frame}{Find the New Chalice of Data (2/3): Directions}
+Three points along a continuum in decreasing levels of ambition:
+\vspace{2ex}
+\begin{enumerate}
+\item {\bf Find the north star}: Does this problem matter to the world? And compared to all of industry and academia, is academic database research necessary to solve it?
+\vspace{1ex}
+\item {\bf Constellation of capabilities}: Articulate {\it Essential Capabilities} that are missing today: without which applications simply do not and cannot otherwise exist. 
+\vspace{1ex}
+\item {\bf A sky full of stars}: \uline{Evangelize declarative thinking to cultures throughout the world}, of which AI is just one culture.  We must clarify what data- (or declarative-?  scalable-?) thinking means\footnote{As emphasized in~\cite{wu2025doesacademicdatabaseresearch}, core database principles is our competitive advantage, such as (1) ``independence between physical and logical'', (2) ``declarativeness'', and (3) ``automatic scalability''.}.
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Find the New Chalice of Data (3/3): What About AI?}
+\begin{exampleblock}{Potential Research Direction in AI.}
+What if we could query anything and everything in the world using LLMs?
+\vspace{1ex}  
+
+\begin{itemize}
+\item What does query execution and optimization on LLMs look like?
+\item How can LLMs aid optimizers?
+\item What if LLMs were access methods?
+\item ...
+\end{itemize}
+\end{exampleblock} 
+
+\vspace{2ex}
+But, are we \underline{\bf uniquely positioned} to dominate this problem? (See: Appendix[p.~\ref{app:a}])
+
+
+\end{frame}
+
+
+
+\begin{frame}{Positions of DB Researchers}
+
+\underline{\bf Optimists}:
+\begin{itemize}
+  \item {\bf Dan Suciu} (UW): ``The people who need us, they know where to find us.''
+  \item {\bf Joseph M. Hellerstein} (UC Berkeley): ``The time spent debating the foolishness could be devoted to far more constructive purposes.''\footnote{\url{https://jhellerstein.github.io/blog/sigmod-optimism/}}
+\end{itemize}
+
+
+\vspace{1ex}
+\underline{\bf Reformists}:
+\begin{itemize}
+  \item {\bf Sihem Amer-Yahia} (CNRS): ``... to reach out to colleagues in other \underline{\bf disciplines}.''
+  \item {\bf Jens Dittrich} (Saarland Univ.): ``We should work more on other topics like \underline{\bf usability}, revise interfaces (instead of performance).''
+\end{itemize}
+
+\vspace{1ex}
+More positions in Appendix[p.~\ref{app:b}].
+
+
+\end{frame}
+
+
+\section{Mission}
+\begin{frame}{Modern Query Engines}
+
+\begin{itemize}
+\item {\bf Assumption}: Closed-world\footnote{\href{https://en.wikipedia.org/wiki/Closed-world_assumption}{\bf Closed-world assumption (CWA)}: A statement that is true is also known to be true. Therefore, conversely, what is not currently known to be true, is false. } $\rightarrow$ Open-world (Generalization capabilities)
+\item {\bf Capability}: Retrieval $\rightarrow$ Reasoning (Reasoning and planning capabilities)
+\item {\bf Data object}: Relational data $\rightarrow$ Unstructured multi-modal data (Semantic understanding and extraction capabilities)
+\item {\bf Query language}: SQL $\rightarrow$ Natural language (Usability and accessibility)
+\end{itemize}
+  
+
+\vspace{3ex}
+
+Refer to~\cite{10.1145/3722212.3725641} for more information.
+
+\end{frame}
+
+
+
+
+\section{Neural?}
+\begin{frame}{Is LLM a Perfect Proxy?}
+
+Parameswaran~et al.~\cite{osti_10531530} studied prompt engineering from the perspective of declarative crowdsourcing. The core question to answer is:
+
+\vspace{1ex}
+
+\begin{itemize}
+  \item We could construct multiple logically equivalent prompts to achieve the same goal, how can we choose / construct the most appropriate one (in terms of accuracy, cost, {\it etc.})?
+\end{itemize}
+
+  
+\end{frame}
+
+
+\begin{frame}{Q1: Varying Prompting Strategies}
+  
+\begin{exampleblock}{Task 1: Semantic Ranking.\footnote{Other case studies mentioned in this paper~\cite{osti_10531530} are available in Appendix [pp. \ref{app:d1}--\ref{app:d4}].}}
+Given 20 ice-cream flavors, rank them by how "chocolatey" they are.
+\end{exampleblock}
+
+\begin{enumerate}
+\item {\bf Baseline}: List all the items in the prompt and ask LLM to rank them directly.
+\item {\bf Coarse-grained}: Rate each item and then sort them based on the ratings.
+\item {\bf Fine-grained}: Employ $O(N^2)$ pairwise comparisons to rank the items.
+\end{enumerate}
+
+\vspace{2ex}
+
+\mitred{\bf Evaluation}: Fine-grained approach trades $\sim 100\times$ tokens for 20\% improvement in Kendall Tau-$\beta$\footnote{\href{https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient}{\bf Kendall rank correlation coefficient}: a standard metric to compare rankings. See Appendix[pp.~\ref{app:c1}--\ref{app:c2}] for more details.} over the baseline.
+
+\end{frame}
+
+
+\begin{frame}{Opportunities for Improvement}
+
+\begin{itemize}
+  \item {\bf O1}: How to identify building blocks ({\it e.g.}, tools, operators, {\it etc.}) that can rewrite and revise the original prompt?
+    \begin{itemize}
+      \item In the previous example, the building blocks contains an enumerator (tool) to generate flavor pairs, a judger (oper ator) that determines the relative ranking of two flavors, and a composer (tool) to sort the flavors based on the pairwise comparisons.
+    \end{itemize}
+  \vspace{1ex}
+
+  \item {\bf O2}: How to optimize the efficiency?
+  \begin{itemize}
+    \item The $O(N^2)$ LLM-calls is impractical for large $N$.
+  \end{itemize}
+
+  \vspace{1ex}
+  \item {\bf O3}: Can we provide theoretical guarantees? 
+  \begin{itemize}
+    \item The LLM-based approaches cannot guarantee the output quality.
+  \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+
+\section{Symbolic $\circ$ Neural}
+\begin{frame}{Symbolic $\circ$ Neural: Steering LLM-Powered Queries}
+
+\begin{itemize}
+\item {\bf Control the logic flow}: Fine-grained design under declarative frameworks\footnote{\href{https://en.wikipedia.org/wiki/Declarative_programming}{\bf Declarative} means the focus is ``what we want'' instead of ``how to implement''. For example, SQL is a typical declarative language whereas C is a typical \href{https://en.wikipedia.org/wiki/Imperative_programming}{\bf imperative} language.}.
+    \begin{itemize}
+      \item LOTUS~\cite{patel2024semantic}, Palimpzest~\cite{liu2025palimpzest}, UQE~\cite{dai2024uqe}, ELEET~\cite{urban2024eleet}
+    \end{itemize}
+\vspace{1ex}
+\item {\bf Control the budget}: Reduce LLM calls while maintaining acceptable quality.
+    \begin{itemize}
+      \item \underline{Model cascade}: BARGAIN~\cite{zeighami2025cutcostsaccuracyllmpowered}
+      \item \underline{Approximation}: LOTUS~\cite{patel2024semantic}, UQE~\cite{dai2024uqe}
+      \item \underline{Small language models (SLMs)}: ELEET~\cite{urban2024eleet}
+      \item \underline{Cost-based optimization}: Palimpzest~\cite{liu2025palimpzest}
+    \end{itemize}
+\vspace{1ex}
+\item {\bf Control the quality}: Ensure intermediate and final results meet expectations.
+    \begin{itemize}
+      \item \underline{Human-in-the-loop}: ThalamusDB~\cite{10.1145/3654989}
+      \item \underline{Assertion synthesis}: SPADE~\cite{shankar2024spade}
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Declarative Frameworks (1/2): Palimpzest}
+
+\begin{columns}
+\begin{column}{0.60\textwidth}
+\begin{figure}
+  \center
+  \includegraphics[width=\textwidth]{figs/palimpzest_example.png}
+  \caption{Running example of Palimpzest.}
+\end{figure}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+  \begin{enumerate}
+  \item Define the data schema (line 3-6.)
+  \item Declare the data source (line 9.)
+  \item Filter the data using semantic operator ``filter'' (line 10-11.)
+  \item Define the execution policy and execute the query (line 14-15.)
+  \end{enumerate}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}{Declarative Frameworks (2/2): ELEET}
+
+  \begin{figure}
+    \center
+    \includegraphics[width=0.8\textwidth]{figs/eleet_example.png}
+    \caption{Example of a query that executes a multi-modal join between a patient table and examination reports. ELEET analyzes the texts and extracts values for each queried attribute, such as the diagnosis from each examination report.}
+  \end{figure}
+  
+\end{frame}
+
+
+\begin{frame}{Efficiency Optimization (1/5): Model Cascade}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{figure}
+  \center
+  \includegraphics[width=\textwidth]{figs/model_cascade.png}
+  \caption{Overview of model cascade.}
+\end{figure}
+\end{column}
+\begin{column}{0.42\textwidth}
+  \begin{itemize}
+    \item {\bf Intuition/Assumption}: High- confidence output from a small model is likely to be correct.
+    \vspace{1ex}
+    \item BARGAIN~\cite{zeighami2025cutcostsaccuracyllmpowered}
+  provides tight theoretical guarantees through task and data-aware sampling,  estimation, and threshold selection.
+    \vspace{1ex}
+    \item \mitred{\bf Limitation}: Utility degrades when the proxy model is not well-calibrated~\cite{wang2025calibrationdeeplearningsurvey}.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Efficiency Optimization (2/5): Proxy-Based Approximation}
+
+\begin{itemize}
+\item {\bf Intuition}: Use a \underline{\bf fast-but-imperfect} approximate proxy to handle easy cases, reserving  the \underline{\bf slow-but-accurate} model only for hard decisions.
+\item Examples of LOTUS~\cite{patel2024semantic}:
+  \begin{itemize}
+    \item \underline{\bf Filter}: Use embedding-based classifier or distilled LLMs to filter out obvious  matches/mismatches.
+    \item \underline{\bf Join}: Use embedding-based similarity to filter tuple pairs.
+  \end{itemize}
+
+\vspace{2ex}
+\item \mitred{\bf Limitations}:
+  \begin{itemize}
+    \item Optimization degree is low; cannot optimize at the level of plan structure.
+    \item Inappropriate adoption of approximation methods results in low accuracy
+  \end{itemize}
+\end{itemize}  
+
+\end{frame}
+
+
+\begin{frame}{Efficiency Optimization (3/5): Approximation for Aggregation Queries.}
+  
+  \begin{exampleblock}{Aggregation Query in UQE.}
+    SELECT COUNT(*) as count 
+    
+    FROM movie\_reviews 
+    
+    WHERE "the review is positive";
+  \end{exampleblock}
+  
+  \begin{itemize}
+    \item {\bf Intuition}: Aggregation queries can be accelerated by reducing the amount of data processed by LLMs.
+
+    \item UQE~\cite{dai2024uqe} adopts \underline{\bf unbiased} stratified sampling for accelerating \underline{\bf aggregation} queries:\looseness=-1
+    \begin{itemize}
+      \item Embed all rows and cluster them into K groups.
+      \item Perform stratified sampling within clusters to select a small number of rows.
+      \item Use weighted averaging of sampled results to unbiasedly estimate aggregation queries
+    \end{itemize}
+
+    \vspace{1ex}
+    \item \mitred{\bf Limitation}: This method is not universal, only support aggregation queries.
+    
+  \end{itemize}
+  
+  
+\end{frame}
+
+
+\begin{frame}{Efficiency Optimization (4/5): Small Language Models}
+  
+\begin{itemize}
+  \item {\bf Intuitions}: (1) SLMs are more efficient than LLMs, ensuring efficient online extraction; 
+  (2) Information in tables can help locate structured information in text.
+
+  \vspace{1ex}
+  \item \mitred{\bf Limitations}: (1) Cannot support complex semantic analytics; (2) Lack of world knowledge; (3) Impractical assumption: attributes in text are known.
+\end{itemize}
+
+\begin{figure}
+\center
+\includegraphics[width=0.9\textwidth]{figs/eleet_model.png}
+\vspace{-1ex}
+\caption{Overview of ELEET~\cite{urban2023caesura}.}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Efficiency Optimization (5/5): Cost-Based Optimization}
+
+\begin{itemize}
+\item {\bf Intuition/Assumption}: If operators are independent, we can compose operators estimations to estimate plan performance (to avoid exponential searching space.)
+\item Method of Palimpzest~\cite{liu2025palimpzest}:
+  \begin{itemize}
+    \item Executes a set of plans on a small set of \underline{\bf sampled data}.
+    \item Obtain per-operator estimates ({\it e.g.}, distribution of runtimes, per-record cost and quality of each operator.)
+    \item Estimate performance of each plan by composing its per-operator estimates.
+  \end{itemize}
+\vspace{2ex}
+\item \mitred{\bf Limitation}: Estimation by executing over sampled data is time-consuming and  inaccurate, which limits optimization effectiveness
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Approximate Query Processing by Human-in-the-Loop}
+    \begin{columns}
+  \begin{column}{0.55\textwidth}
+    \begin{figure}
+    \center
+    \includegraphics[width=\textwidth]{figs/ThalamusDB_labeling.png}
+    \caption{The labeling process in ThalamusDB~\cite{10.1145/3654989}.}
+    \end{figure}
+  \end{column}
+  
+  \begin{column}{0.5\textwidth}
+  \begin{itemize}
+    \item {\bf Motivation}: Labels are usually unaccessible or expensive to obtain.
+    \item {\bf Intuition}: Users can be seen as ``oracles'' that provide labels.
+    \item {\bf Objective}: Balance the human cost and the quality of query results.
+    \vspace{2ex}
+    \item \mitred{\bf Limitations}: (1) Human effort; (2) Depends on the assumption: the more confident the model is, the more accurate the prediction is.
+  \end{itemize}
+  \end{column}
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}{Assertion Synthesis (1/2): SPADE}
+
+  \begin{columns}
+  \begin{column}{0.55\textwidth}
+    \begin{figure}
+    \center
+    \includegraphics[width=\textwidth]{figs/spade_framework.png}
+    \caption{Workflow of SPADE.}
+    \end{figure}
+  \end{column}
+  
+  \begin{column}{0.5\textwidth}
+  \begin{itemize}
+    \item {\bf Motivation}: Monitor the data quality through LLM pipelins.
+    \item {\bf Intuition}: We can mine prompt version histories to identify assertion criteria for LLM  pipelines~\cite{shankar2024spade}.
+    \item {\bf Objective}: Minimal set of assertions with qualified coverage and False Failure Rate.
+    \vspace{2ex}
+    \item \mitred{\bf Limitations}: (1) Only focus on single-prompt pipelines; (2) lack of labeled data; (3) LLM dependencies.
+  \end{itemize}
+  \end{column}
+  \end{columns}
+
+\end{frame}
+
+\begin{frame}{Assertion Synthesis (2/2): Delta-Driven Assertion Synthesis}
+
+\begin{figure}
+\center
+\includegraphics[width=0.9\textwidth]{figs/delta_driven.png}
+\caption{Comparison of 7 prompt versions for an LLM pipeline to write personalized movie recommendations.}
+\end{figure}
+
+
+\end{frame}
+
+
+
+\begin{frame}{Takeaways}
+
+\begin{itemize}
+  \item The declarative framework makes it possible to control the logic flow and optimize both efficiency and effectiveness.
+  \item Operator optimization (model cascading, approximation, SLM, cost-based optimization) can effectively improve query efficiency.
+  \item Human-in-the-loop method and assertion synthesis can effectively control the quality of query results.
+\end{itemize}
+
+\vspace{2ex}
+
+\mitred{\bf Caveat}: These approaches focus on operators instead of the \underline{\bf workflow} and require user-specified logic flow which introduce additional \underline{\bf human cost}.
+\end{frame}
+
+
+
+
+\section{Neural $\circ$ Symbolic $\circ$ Neural}
+\begin{frame}{Neural $\circ$ Symbolic $\circ$ Neural: Manipulate Symbols Automatically}
+
+To improve the accessibility, several challenges should be addressed:
+
+\vspace{2ex}
+\begin{itemize}
+
+\item {\bf How to align the natural language with the query language?}
+  \begin{itemize}
+    \item \underline{NL2SQL}: TAG~\cite{biswal2024text2sql} (Tabular data), CAESURA~\cite{urban2023caesura} (Multi-modal data)
+    \item \underline{NL to self-defined operators}: Unify~\cite{wang2025unify}, iDataLake~\cite{wang2025idatalake}, AOP~\cite{wang2025aop}
+    \item \underline{Planning \& tool usage}:  CAESURA~\cite{urban2023caesura}, AOP~\cite{wang2025aop}
+  \end{itemize}
+
+\vspace{1ex}
+
+\item {\bf How to optimize the efficiency of the generated query plan?}
+  \begin{itemize}
+    \item \underline{Independent parallelism}: AOP~\cite{wang2025aop}
+    \item \underline{Cost-based optimization}: Unify~\cite{wang2025unify}
+    \item \underline{Fault tolerance}: iDataLake~\cite{wang2025idatalake}
+  \end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Convert Natural Language to Query Languages}
+
+\begin{itemize}
+\item {\bf Objective}: Find a convertion function $f$: (NL Query, Operators, Tools, {\it etc}.) $\rightarrow$ Query Language, that is logically correct.
+
+\item {\bf Solution 1}: Instruct LLMs to generate the query plan.
+  \begin{itemize}
+    \item Straightforward yet could be inaccurate (depends on LLM capabilities).
+  \end{itemize}
+
+\item {\bf Solution 2}: Progressive matching~\cite{wang2025unify}. 
+  \begin{itemize}
+    \item \underline{Pros}: More robustness and exaplainable.
+    \item \underline{Cons}: Inflexibility of operaotrs.
+  \end{itemize}
+\end{itemize}
+
+\begin{figure}
+\center
+\includegraphics[width=\textwidth]{figs/unify_logic_plan.png}
+\vspace{-3ex}
+\caption{Logical plan generation in Unify via progressive matching.}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Optimize the Execution Plan (1/3): Independent Parallelism}
+  
+\begin{itemize}
+\item {\bf Intuition}: (1) Identifying and parallelizing independent operations can significantly reduce execution time.
+
+\item {\bf Method of AOP}~\cite{wang2025aop}: (1) Instruct LLMs to generate pipelines; (2) Optimize pipelines into DAG; (3) Combine different pipelines; (4) Layer-wise execution.
+
+\vspace{2ex}
+\item \mitred{\bf Limitation}: The quality of the generated plans rely on LLM capabilities.
+  
+\end{itemize}
+  
+\begin{figure}
+\center
+\includegraphics[width=\textwidth]{figs/aop_framework.png}
+\vspace{-4ex}
+\caption{Framework of AOP.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Optimize the Execution Plan (2/3): Cost-Based Optimization}
+\begin{itemize}
+  \item {\bf Observation}: Data points satisfying the query often have high semantic relevance with the query.
+  \item {\bf Mathod of Unify}~\cite{wang2025unify}: (1) Embed records; (2) Retrieve query-related record samples via importance sampling; (3) Estimate the cardinality of query results based on the samples; (4) Optimize the execution plan based on the estimates.
+\end{itemize} 
+
+
+
+\begin{figure}
+\center
+\includegraphics[width=0.5\textwidth]{figs/unify_sampling.png}
+\vspace{-1ex}
+\caption{Importance sampling in Unify.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{Optimize the Execution Plan (3/3): Online Plan Adjustment}
+
+\begin{itemize}
+  \item {\bf Intuition}: When the execution fails, it's usually beneficial to restore from the checkpoint and switch to other other low-cost plans rather than starting over.
+\end{itemize}
+
+
+\begin{figure}
+\center
+\includegraphics[width=0.5\textwidth]{figs/idatalake_pipeline_exec.png}
+\vspace{-1ex}
+\caption{Pipeline execution in iDataLake~\cite{wang2025idatalake}.}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Case Study: Spec-Driven Development with Claude Code}
+\begin{itemize}
+\item {\bf Declarativeness}: The development is steered by the qualified task list\footnote{The spec and the task list can be generated by \href{https://github.com/github/spec-kit}{github/spec-kit}.}. Tools and MCP servers can be flexibly plugged in.
+\item {\bf Efficiency}: Claude Code supports parallel sessions
+\footnote{See: \href{https://docs.claude.com/en/docs/claude-code/common-workflows\#run-parallel-claude-code-sessions-with-git-worktrees}{Run Parallel Claude Code Sessions with Git Worktrees}.}.
+\item {\bf Human effort}: Claude Code supports YOLO (You-Only-Live-Once) mode\footnote{See: \href{https://www.anthropic.com/engineering/claude-code-best-practices}{Claude Code best practices}.}.
+\item {\bf Quality Control}: (1) Test-driven development; (2) Human-in-the-loop checking.
+\end{itemize} 
+\end{frame}
+
+
+\begin{frame}{Takeaways}
+\begin{itemize}
+  \item Directly instructing LLMs to generate pipeline achieves \underline{\bf limited accuracy}.
+  \item Progressively matching appropriate operators is limited by \underline{\bf inflexibility} of operaotrs, strict requirement of intput/output relationship of operators.
+  \item Optimization strategies: (1) Parallelizing independent operations; (2) Cost-based optimizations; and (3) Online plan adjustment.
+\end{itemize}
+
+
+\vspace{3ex}
+\mitred{\bf Discussion}: Where can we go from here?
+\end{frame}
+
+
+
+
+\section*{Reference}
+% Reference from a .bib file
+\begin{frame}[allowframebreaks]{References}
+    % \nocite{*}
+    \renewcommand{\refname}{} 
+    \bibliographystyle{plain} 
+    \bibliography{references}
+\end{frame}
+
+\section*{Appendix}
+\begin{frame}{A. Does DB Research Dominate LLM-Querying?}
+\label{app:a}
+
+{\bf TL;DR}: Yes and No.
+\vspace{1ex}
+\begin{itemize}
+\item {\bf Our advantages}. Declarativeness, cost-based optimization, approximation guarantees, and performance optimization. \underline{They can do RAG but we can do it better}.\looseness=-1
+\item {\bf Poor predicatability}. LLMs as a compute substrate evolve weekly, meaning that any optimization rules based on yesterday's trade-offs are immediately slower, more expensive, or lower quality. (We can only follow LLM companies.)
+\item {\bf Impossible to reason about}. The responses change for no reason, their tunable parameter is ``any text.'' (Common task with the AI community.)
+\item {\bf Undefined correctness}. There are no semantics to create correctness benchmarks, only vibes. (Common task with the AI community.)
+\end{itemize}
+
+\vspace{1ex}
+
+Similar reasoning should be applied to data preprocessing for AI, video querying, provenance for AI, NL2SQL, ML training and serving, prompt engineering, etc.
+
+\end{frame}
+
+
+\begin{frame}{B. More Positions for the Panel}
+\label{app:b}
+
+\begin{itemize}
+\item {\bf Pınar Tözün} (IT Univ. of Copenhagen): ``I think there are `Systems for ML' aspects that our community is well-positioned to take on.''
+\item {\bf Leilani Battle} (UW): ``(Consider) Not just `what can we do?' but also `what should we do?'({\it e.g.}, ethical issues, software abusiveness, etc.)''
+\item {\bf Aditya Parameswaran} (UC Berkeley): ``(We need to) fully embrace LLMs as a means to solve the AI-complete problems, {\it e.g.}, data integration, data cleaning.''
+\item {\bf Sudeepa Roy} (Duke Univ.): ``(We should) be open to embrace new ideas and take the opportunity to start new collaborations in the fast evolving landscape of AI.'' \looseness=-1
+\item {\bf Samuel Madden} (MIT): ``Our community still has a role to play in the new AI era.''
+\item {\bf Felix Naumann} (HPI): ``The traditional problem space of all things data management is alive and kicking.'' \looseness=0
+\item {\bf Paolo Papotti} (EURECOM): ``One risk is the limited openness to new topics.''
+\item {\bf James Cowling} (Convex): ``The huge gift academia has is the ability to investigate impractical ideas.''
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{C-1. Kendall Tau-$\beta$: Intuition}
+  \label{app:c1}
+  \begin{itemize}
+    \item The Kendall Tau-$\beta$ coefficient measures the \textbf{rank correlation} between two variables $X$ and $Y$.
+    \vspace{4pt}
+    \item It quantifies how consistently two orderings (e.g., human vs. model) \textbf{agree on pairwise comparisons}.
+    \vspace{6pt}
+    \item For any two items $(x_i, y_i)$ and $(x_j, y_j)$:
+      \begin{itemize}
+        \item \textbf{Concordant}: $(x_i - x_j)(y_i - y_j) > 0$
+        \item \textbf{Discordant}: $(x_i - x_j)(y_i - y_j) < 0$
+        \item \textbf{Tie}: $x_i = x_j$ or $y_i = y_j$
+      \end{itemize}
+    \vspace{6pt}
+    \item $\tau_\beta$ represents the \textbf{probability difference} between concordant and discordant pairs:
+    \[
+      \tau_\beta = P(\text{concordant}) - P(\text{discordant})
+    \]
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{C-2. Kendall Tau-$\beta$: Notation and Formula}
+  \label{app:c2}
+  \begin{itemize}
+    \item Let:
+      \[
+      \begin{aligned}
+        n_c & : \text{number of concordant pairs} \\
+        n_d & : \text{number of discordant pairs} \\
+        n_1 & : \text{pairs tied only on } X \\
+        n_2 & : \text{pairs tied only on } Y
+      \end{aligned}
+      \]
+    \vspace{6pt}
+    \item The Kendall Tau-$\beta$ coefficient is defined as:
+      \[
+        \tau_\beta = \frac{n_c - n_d}{\sqrt{(n_c + n_d + n_1)(n_c + n_d + n_2)}}
+      \]
+    \vspace{6pt}
+    \item \textbf{Range:} $-1 \leq \tau_\beta \leq 1$
+      \begin{itemize}
+        \item $\tau_\beta = 1$: perfect agreement (identical ranking)
+        \item $\tau_\beta = -1$: perfect disagreement (reverse ranking)
+        \item $\tau_\beta = 0$: no correlation
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{D-1. Q2: Hybrid Coarse $\rightarrow$ Fine-Grained Prompting}
+\label{app:d1}
+
+\begin{exampleblock}{Task 2: Alphabetical Sorting.\footnote{This example illustrates error mitigation in fine-grained approaches, though alphabetical sorting represents a deterministic task where conventional algorithms would be more appropriate than LLMs.}}
+Given a list of 100 random English words, sort them in alphabetical order. 
+\end{exampleblock}
+
+\begin{enumerate}
+\item {\bf Baseline}: List all the items in the prompt and ask LLM to sort them directly.
+\item {\bf Hybrid strategy}: (a) Ask the LLM to sort the entire list; (b) Drop all hallucinated words; (c) Reinsert the missing words.
+\end{enumerate}
+
+\vspace{2ex}
+
+\mitred{\bf Evaluation}: The hybrid strategy trades $O(kN)$ additional LLM calls (for $k$ missing words and $N$ partially sorted words) to eliminate hallucinated and missing words.
+
+\end{frame}
+
+\begin{frame}{D-2. Q3: Ensuring Internal Consistency}
+\label{app:d2}
+
+\begin{exampleblock}{Task 3: Entity Resolution.}
+Identify all same citations on the DBLP-Google Scholar dataset.
+\end{exampleblock}
+
+\begin{enumerate}
+\item {\bf Baseline}: Employ $O(N^2)$ pairwise LLM comparisons for entity resolution.
+\item {\bf $k$-NN}: 
+(a) Retrieve $k$ nearest neighbors per citation; (b) Execute batch identification within neighborhood clusters for each citation pair ($2k+2$ citations per LLM-call); (c) Compute transitive closure\footnote{{\it e.g.}, the transitive closure of $\{(1,2), (2,3)\}$ is $\{(1,2), (2,3), (1,3)\}$} over identified equivalence pairs.
+\end{enumerate}
+
+\vspace{2ex}
+
+\mitred{\bf Evaluation}: The baseline exhibits high precision (95.2\%) but limited recall (50.3\%). Applying transitive closure with 2-NN improves recall to 59.3\% while maintaining acceptable precision (92.3\%).
+  
+\end{frame}
+
+\begin{frame}{D-3. Q4: Leveraging LLM and non-LLM Approaches}
+\label{app:d3}
+
+\begin{exampleblock}{Missing Value Imputation.}
+Given an entity with $j$ attributes $A=\{a_1,\ldots,a_j\}$ 
+and values $E=\{e_1,\ldots,e_j\}$ where $e_j$ is missing, predict $e_j$ based on the known values.
+\end{exampleblock}
+
+\begin{enumerate}
+\item {\bf Baseline}: Employ LLM to predict $e_j$ based on $A$ and $E$ directly.
+\item {\bf $k$-NN}\footnote{Besides non-LLM methods, model cascade~\cite{zeighami2025cutcostsaccuracyllmpowered} is an alternative yet more flexible solution.}: (a) Retrieve $k$ nearest neighbors of the entity; (b) Impute by $k$-NN if all neighbors have the same value for $a_j$; (c) Otherwise, impute by the LLM.
+\end{enumerate}
+
+\vspace{1ex}
+
+\mitred{\bf Evaluation}: (a) The baseline suffers from the misalignment with ground truth ({\it e.g.}, ``Elgato Systems'' instead of ``Elgato'';) (b) The hybrid approach (LLM+$k$-NN) reduces token consumption by 50\% with acceptable accuracy degradation (92.31\%$\rightarrow$87.69\%.)
+
+\end{frame}
+
+
+\begin{frame}{D-4. Takeaways}
+\label{app:d4}
+
+\begin{enumerate}
+\item[Q1:] Rather than trying to accomplish the entire objective via a single task, it is beneficial to explore other task types, especially to maximize accuracy.
+\item[Q2:] Employing hybrid strategies, with coarse-grained tasks first, followed by fine-grained ones, can lead to low cost and high accuracy overall.
+\item[Q3:] Fixing erroneous LLM responses based on evidence from other responses can be an effective way to improve accuracy.
+\item[Q4:] Leveraging a non-LLM proxy can help substantially reduce costs while keeping accuracy similar.
+\end{enumerate}
+
+\vspace{1ex}
+
+\mitred{\bf Insight:} Identifying and reconstructing building blocks of LLM-powered query tasks yields benefits in both effectiveness and efficiency.
+
+
+\end{frame}
+
+
+\end{document}
