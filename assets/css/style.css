@@ -626,11 +626,11 @@ a:hover {
 }
 
 /* Hidden News Items */
-.hidden-news {
+.news-item.hidden {
   display: none;
 }
 
-.hidden-news.visible {
+.news-item.visible {
   display: flex;
 }
 

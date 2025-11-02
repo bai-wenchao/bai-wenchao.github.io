@@ -348,25 +348,78 @@ fontAwesome.rel = 'stylesheet';
 fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
 document.head.appendChild(fontAwesome);
 
-// News Toggle Function
-function toggleNews() {
-  const hiddenNewsItems = document.querySelectorAll('.hidden-news');
+// News Management Function
+function initializeNewsSection() {
+  const newsList = document.getElementById('news-list');
+  const toggleContainer = document.getElementById('news-toggle-container');
+  const toggleBtn = document.getElementById('news-toggle-btn');
   const toggleText = document.getElementById('news-toggle-text');
   const toggleIcon = document.getElementById('news-toggle-icon');
 
-  if (hiddenNewsItems.length === 0) return;
+  if (!newsList) return;
 
-  const isExpanded = hiddenNewsItems[0].classList.contains('visible');
+  const newsItems = Array.from(newsList.querySelectorAll('.news-item'));
+  const featuredCount = 3; // Show top 3 most recent news items
 
-  hiddenNewsItems.forEach(item => {
-    if (isExpanded) {
-      item.classList.remove('visible');
-      toggleText.textContent = 'Show More News';
-      toggleIcon.className = 'fas fa-chevron-down';
-    } else {
-      item.classList.add('visible');
-      toggleText.textContent = 'Show Less News';
-      toggleIcon.className = 'fas fa-chevron-up';
-    }
+  // Sort news items by date (newest first)
+  newsItems.sort((a, b) => {
+    const dateA = new Date(a.dataset.date);
+    const dateB = new Date(b.dataset.date);
+    return dateB - dateA;
   });
+
+  // Reorder DOM elements
+  newsItems.forEach(item => {
+    newsList.appendChild(item);
+  });
+
+  // Hide items beyond the featured count
+  const hiddenItems = newsItems.slice(featuredCount);
+
+  if (hiddenItems.length > 0) {
+    // Hide the extra items
+    hiddenItems.forEach(item => {
+      item.classList.add('hidden');
+    });
+
+    // Show the toggle button
+    toggleContainer.style.display = 'block';
+
+    // Add click handler
+    toggleBtn.addEventListener('click', toggleNews);
+  }
 }
+
+function toggleNews() {
+  const hiddenItems = document.querySelectorAll('.news-item.hidden');
+  const toggleText = document.getElementById('news-toggle-text');
+  const toggleIcon = document.getElementById('news-toggle-icon');
+
+  const isExpanded = hiddenItems.length === 0;
+
+  if (isExpanded) {
+    // Collapse: hide items beyond the first 3
+    const newsItems = Array.from(document.querySelectorAll('.news-item'));
+    const featuredCount = 3;
+
+    newsItems.slice(featuredCount).forEach(item => {
+      item.classList.add('hidden');
+      item.classList.remove('visible');
+    });
+
+    toggleText.textContent = 'Show More News';
+    toggleIcon.className = 'fas fa-chevron-down';
+  } else {
+    // Expand: show all items
+    hiddenItems.forEach(item => {
+      item.classList.remove('hidden');
+      item.classList.add('visible');
+    });
+
+    toggleText.textContent = 'Show Less News';
+    toggleIcon.className = 'fas fa-chevron-up';
+  }
+}
+
+// Initialize news section when DOM is ready
+document.addEventListener('DOMContentLoaded', initializeNewsSection);
