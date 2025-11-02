@@ -266,30 +266,76 @@ function initializeAbstractFolding() {
   publicationItems.forEach(item => {
     const abstract = item.querySelector('.publication-abstract');
     if (abstract) {
-      // Create toggle button
-      const toggleButton = document.createElement('button');
-      toggleButton.className = 'abstract-toggle btn btn-small';
-      toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i> Show Abstract';
+      // Store original text
+      const originalText = abstract.textContent.trim();
+      const previewLines = 3; // Show first 3 lines
+      const words = originalText.split(' ');
 
-      // Insert toggle button before the abstract
-      abstract.parentNode.insertBefore(toggleButton, abstract);
+      // Calculate preview text (approximately 3 lines)
+      const previewWords = Math.min(60, Math.floor(words.length * 0.4)); // ~40% or 60 words
+      const previewText = words.slice(0, previewWords).join(' ') + '...';
 
-      // Set initial state - hide abstract
-      abstract.style.display = 'none';
-      abstract.classList.add('abstract-content');
+      // Create abstract container
+      const abstractContainer = document.createElement('div');
+      abstractContainer.className = 'abstract-container';
+
+      // Create preview element
+      const previewElement = document.createElement('div');
+      previewElement.className = 'abstract-preview';
+      previewElement.textContent = previewText;
+
+      // Create full text element (initially hidden)
+      const fullTextElement = document.createElement('div');
+      fullTextElement.className = 'abstract-full';
+      fullTextElement.textContent = originalText;
+      fullTextElement.style.display = 'none';
+
+      // Create toggle link
+      const toggleLink = document.createElement('a');
+      toggleLink.className = 'abstract-toggle-link';
+      toggleLink.href = '#';
+      toggleLink.innerHTML = '<i class="fas fa-chevron-right"></i> Read more';
+      toggleLink.style.cssText = `
+        color: #007bff;
+        text-decoration: none;
+        font-size: 0.9em;
+        font-weight: 500;
+        margin-top: 8px;
+        display: inline-block;
+        transition: color 0.2s ease;
+      `;
+
+      // Replace original abstract with new structure
+      abstract.parentNode.insertBefore(abstractContainer, abstract);
+      abstractContainer.appendChild(previewElement);
+      abstractContainer.appendChild(fullTextElement);
+      abstractContainer.appendChild(toggleLink);
+      abstract.remove();
 
       // Add toggle functionality
       let isExpanded = false;
-      toggleButton.addEventListener('click', function() {
+      toggleLink.addEventListener('click', function(e) {
+        e.preventDefault();
         isExpanded = !isExpanded;
 
         if (isExpanded) {
-          abstract.style.display = 'block';
-          toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i> Hide Abstract';
+          previewElement.style.display = 'none';
+          fullTextElement.style.display = 'block';
+          toggleLink.innerHTML = '<i class="fas fa-chevron-down"></i> Show less';
         } else {
-          abstract.style.display = 'none';
-          toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i> Show Abstract';
+          previewElement.style.display = 'block';
+          fullTextElement.style.display = 'none';
+          toggleLink.innerHTML = '<i class="fas fa-chevron-right"></i> Read more';
         }
+      });
+
+      // Add hover effect
+      toggleLink.addEventListener('mouseenter', function() {
+        this.style.color = '#0056b3';
+      });
+
+      toggleLink.addEventListener('mouseleave', function() {
+        this.style.color = '#007bff';
       });
     }
   });
