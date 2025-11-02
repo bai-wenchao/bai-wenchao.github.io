@@ -51,37 +51,92 @@ layout: default
 <section id="news" class="section section-alt">
   <div class="container">
     <h2 class="section-title">Recent News</h2>
-    <div class="news-list">
-      <div class="news-item">
+    <div class="news-list" id="news-list">
+      <!-- Featured News (Always Visible) -->
+      <div class="news-item featured">
         <div class="news-date">
           <i class="fas fa-calendar"></i>
-          September 2025
+          Oct. 16, 2025
         </div>
         <div class="news-content">
-          <h3>New Position Started</h3>
-          <p>Excited to announce my new research position focusing on AI-powered data systems and query engines.</p>
+          <h3>National Scholarship Awarded</h3>
+          <p>Received the prestigious National Scholarship (30,000 CNY) in recognition of academic excellence and research achievements.</p>
         </div>
       </div>
-      <div class="news-item">
+
+      <div class="news-item featured">
         <div class="news-date">
           <i class="fas fa-calendar"></i>
-          July 2025
+          June 22-27, 2025
         </div>
         <div class="news-content">
-          <h3>Research Collaboration</h3>
-          <p>Began collaboration with Shenzhen Institute of Computing Sciences on advanced data integration projects.</p>
+          <h3>SIGMOD Conference in Berlin</h3>
+          <p>Presented "Rule-Based Data Cleaning with GPUs on a Single Machine" and demonstrated MiniClean system at SIGMOD 2025 in Berlin, Germany. First time visiting Europe - exciting experience!</p>
         </div>
       </div>
-      <div class="news-item">
+
+      <div class="news-item featured">
         <div class="news-date">
           <i class="fas fa-calendar"></i>
-          May 2025
+          May 13, 2025
         </div>
         <div class="news-content">
-          <h3>Conference Presentation</h3>
-          <p>Presented our work on "Rule-Based Graph Cleaning with GPUs" at SIGMOD 2025.</p>
+          <h3>SIGMOD Student Travel Award</h3>
+          <p>Received the SIGMOD Student Travel Award (1,800 USD) to attend and present at the SIGMOD 2025 conference.</p>
         </div>
       </div>
+
+      <!-- Additional News (Hidden by default) -->
+      <div class="news-item hidden-news">
+        <div class="news-date">
+          <i class="fas fa-calendar"></i>
+          March 16, 2025
+        </div>
+        <div class="news-content">
+          <h3>SIGMOD Demo Paper Accepted</h3>
+          <p>Our paper "MiniClean: A Single-Machine System for Cleaning Big Graphs" was accepted by SIGMOD Demo Proposals. Grateful to all collaborators!</p>
+        </div>
+      </div>
+
+      <div class="news-item hidden-news">
+        <div class="news-date">
+          <i class="fas fa-calendar"></i>
+          Jan. 31, 2025
+        </div>
+        <div class="news-content">
+          <h3>First First-Author Paper Accepted</h3>
+          <p>Our paper "Rule-Based Data Cleaning with GPUs on a Single Machine" was accepted by SIGMOD! This marks my first first-author paper. Thank you to all collaborators!</p>
+        </div>
+      </div>
+
+      <div class="news-item hidden-news">
+        <div class="news-date">
+          <i class="fas fa-calendar"></i>
+          July 4, 2023
+        </div>
+        <div class="news-content">
+          <h3>Joined Shenzhen Institute of Computing Sciences</h3>
+          <p>Started as a research intern at Shenzhen Institute of Computing Sciences. An exciting journey begins!</p>
+        </div>
+      </div>
+
+      <div class="news-item hidden-news">
+        <div class="news-date">
+          <i class="fas fa-calendar"></i>
+          Sep. 1, 2022
+        </div>
+        <div class="news-content">
+          <h3>PhD Program Started</h3>
+          <p>Began my PhD program at Southeast University. Let the research journey begin!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-toggle">
+      <button class="btn btn-secondary" id="news-toggle-btn" onclick="toggleNews()">
+        <span id="news-toggle-text">Show More News</span>
+        <i class="fas fa-chevron-down" id="news-toggle-icon"></i>
+      </button>
     </div>
   </div>
 </section>

@@ -347,3 +347,26 @@ const fontAwesome = document.createElement('link');
 fontAwesome.rel = 'stylesheet';
 fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
 document.head.appendChild(fontAwesome);
+
+// News Toggle Function
+function toggleNews() {
+  const hiddenNewsItems = document.querySelectorAll('.hidden-news');
+  const toggleText = document.getElementById('news-toggle-text');
+  const toggleIcon = document.getElementById('news-toggle-icon');
+
+  if (hiddenNewsItems.length === 0) return;
+
+  const isExpanded = hiddenNewsItems[0].classList.contains('visible');
+
+  hiddenNewsItems.forEach(item => {
+    if (isExpanded) {
+      item.classList.remove('visible');
+      toggleText.textContent = 'Show More News';
+      toggleIcon.className = 'fas fa-chevron-down';
+    } else {
+      item.classList.add('visible');
+      toggleText.textContent = 'Show Less News';
+      toggleIcon.className = 'fas fa-chevron-up';
+    }
+  });
+}

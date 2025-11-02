@@ -625,6 +625,53 @@ a:hover {
   line-height: 1.6;
 }
 
+/* Hidden News Items */
+.hidden-news {
+  display: none;
+}
+
+.hidden-news.visible {
+  display: flex;
+}
+
+/* News Toggle Button */
+.news-toggle {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.news-toggle .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+  color: #495057;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.news-toggle .btn:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  border-color: #adb5bd;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.news-toggle .btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.news-toggle .fa-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.news-toggle .fa-chevron-up {
+  transform: rotate(180deg);
+}
+
 /* Responsive Design for News */
 @media (max-width: 768px) {
   .news-item {
