@@ -240,7 +240,7 @@ function initializeAbstractFolding() {
         if (isExpanded) {
           previewElement.style.display = 'none';
           fullTextElement.style.display = 'block';
-          toggleLink.innerHTML = '<i class="fas fa-chevron-down"></i> Show less';
+          toggleLink.innerHTML = '<i class="fas fa-chevron-up"></i> Show less';
         } else {
           previewElement.style.display = 'block';
           fullTextElement.style.display = 'none';
