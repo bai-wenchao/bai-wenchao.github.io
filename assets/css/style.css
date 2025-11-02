@@ -355,6 +355,13 @@ a:hover {
   line-height: 1.6;
 }
 
+.contact-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .clustrmaps-container {
   margin-top: 3rem;
   text-align: center;

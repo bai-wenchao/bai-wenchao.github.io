@@ -388,7 +388,12 @@ layout: default
         <h3>Get in Touch</h3>
         <p>I'm always interested in hearing about potential collaborations,
         research opportunities, or answering questions about my work.</p>
-        <a href="mailto:{{ site.author.email }}" class="btn">Send Me an Email</a>
+        <div class="contact-buttons">
+          <a href="mailto:{{ site.author.email }}" class="btn">Send Me an Email</a>
+          <a href="{{ "/feed.xml" | absolute_url }}" class="btn btn-outline" target="_blank">
+            <i class="fas fa-rss"></i> RSS Feed
+          </a>
+        </div>
       </div>
     </div>
   </div>
