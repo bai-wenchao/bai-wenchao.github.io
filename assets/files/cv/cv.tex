@@ -1,0 +1,112 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Important note:
+% This template requires the cv.cls file to be in the same directory as the
+% .tex file. The cv.cls file provides the resume style used for structuring the
+% document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{cv} % Use the custom resume.cls style
+
+\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.6in]{geometry} % Document margins
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{multirow}
+
+\newcommand{\tab}[1]{\hspace{.2667\textwidth}\rlap{#1}}
+\newcommand{\itab}[1]{\hspace{0em}\rlap{#1}}
+\newlist{myitemize}{itemize}{3}
+\setlist[myitemize,1]{label=$\circ$,leftmargin=2.8ex}
+\setlist[myitemize,2]{label=$\bullet$,leftmargin=2.8ex}
+\setlist[myitemize,3]{label=$\diamond$, leftmargin=2.2ex}
+\newenvironment{mbi}{\begin{myitemize}
+        \setlength{\topsep}{0.6ex}\setlength{\itemsep}{0.16ex}\vspace{0.36ex}}
+        {\end{myitemize}\vspace{0.16ex}}
+
+        \newcommand{\mei}{\end{myitemize}\vspace{0.6ex}}
+\newenvironment{tmbi}{\begin{myitemize}
+        \setlength{\topsep}{0.36ex}\setlength{\itemsep}{0ex}}
+        {\end{myitemize}\vspace{1ex}}
+
+\name{Wenchao Bai} % Your name
+\address{\textbf{Phone}: (+86) 15161179117~\\ 
+\textbf{E-mail}: \href{mailto: wenchao.bai.chn@gmail.com}{wenchao.bai.chn@gmail.com}} 
+
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}[MITRed]{Education}
+%--copy and paste this region  if you need more--
+{\textbf{Southeast University}, Jiangsu, China} \hfill {\em Sep. 2022 - Present} 
+\\ \textbf{Ph.D. Candidate} @ Computer Science and Engineering. 
+\hfill { \textbf{GPA}: 3.52/4.0; \textbf{Rank}: 4/49 (Top 8\%)}
+\\\\
+{\textbf{Northeastern University}, Liaoning, China} \hfill {\em Sep. 2018 - Jun. 2022} 
+\\ \textbf{B.Eng.} @ Software Engineering. 
+\hfill { \textbf{GPA}: 4.07/5.0; \textbf{Rank}: 3/49 (Top 6\%)}
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%	EXPERIENCE SECTION
+%----------------------------------------------------------------------------------------
+\begin{rSection}[MITRed]{Internship Experience}
+%--copy and paste this region  if you need more--
+{\bf Shenzhen Institute of Computer Science}, Guangdong, China \hfill {\em Jul. 2023 - Present}\\
+{\bf Researcher Intern.} @ Foundamental Research Center. \\
+\\
+{\bf iFlytek}, Anhui, China \hfill {\em May 2022 - Mar. 2022}\\
+{\bf Big Data Engineer Intern.} @ Intelligent City Business Group. \\
+\\
+{\bf 58.com Inc.}, Beijing, China \hfill {\em Mar. 2021 - Jul. 2021}\\
+{\bf NLP Engineer Intern.} @ AI Lab.
+\end{rSection}
+
+
+\begin{rSection}[MITRed]{Research Interests}
+\mbi
+    \item \textbf{Data Theories}: Data integration, data quality, and data mining.
+    \item \textbf{Data Systems}: Resource-Efficient systems, hardware (GPU) acceleration.
+    \item \textbf{Data Agents}: Autonomous, reliable, and scalable data management over data lakes.
+\mei
+\end{rSection}
+
+%----------------------------------------------------------------------------------------
+%    Awards
+%----------------------------------------------------------------------------------------
+\begin{rSection}[MITRed]{Awards}
+\mbi
+    \item {\bf National Scholarship} (30,000 CNY) \hfill {\em Oct. 2025}
+    \item {\bf SIGMOD Student Travel Award} (1,800 USD) \hfill {\em May 2025}
+\mei
+\end{rSection}
+%----------------------------------------------------------------------------------------
+%    SERVICE
+%----------------------------------------------------------------------------------------
+\begin{rSection}[MITRed]{Service}
+%--copy and paste this region  if you need more--
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{ ll } 
+{\bf TA}: & Algorithm Design and Analysis @ SEU (Undergraduated, Spring, 2025) \\
+{\bf Reviewer}: & T-ITS'24, WWW'26 \\ 
+\end{tabular}
+\end{rSection}
+%----------------------------------------------------------------------------------------
+%    SELECTED PUBLICATIONS
+%----------------------------------------------------------------------------------------
+\vspace{1em}
+\begin{rSection}[MITRed]{Selected Publications} 
+\vspace{-2em}
+\nocite{*}
+\renewcommand{\refname}{} 
+\bibliographystyle{plain} 
+\bibliography{pub}
+\end{rSection}
+
+\end{document}
