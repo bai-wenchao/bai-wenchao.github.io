@@ -8,3 +8,6 @@
 *.synctex.gz
 *.bbl
 *.run.xml
+*.nav
+*.snm
+*.synctex

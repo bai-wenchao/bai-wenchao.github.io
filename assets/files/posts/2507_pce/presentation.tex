@@ -1,0 +1,772 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Theme settings
+\usetheme{Berlin}
+\usecolortheme{beaver}
+% \setbeamertemplate{navigation symbols}{}  % Remove navigation symbols
+\setbeamertemplate{footline}[frame number]  % Show frame numbers
+
+
+% Packages
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xspace}
+
+
+\newcommand{\ie}{\emph{i.e.,}\xspace}
+\newcommand{\eg}{\emph{e.g.,}\xspace}
+\newcommand{\st}{\emph{s.t.}\xspace}
+
+\definecolor{darkgreen}{RGB}{0, 100, 0}
+\definecolor{warn}{RGB}{100, 0, 0}
+\newcommand{\hl}[1]{{\color{darkgreen}{#1}}}
+\newcommand{\warn}[1]{{\color{warn}{#1}}}
+
+
+% Title information
+\title{Recent Advances in Pessimistic Cardinality Estimation}
+% \subtitle{An Information Theoretic Perspective}
+\author{wbai@seu.edu.cn}
+% \institute{}
+\date{\today}
+
+\begin{document}
+
+% Title page
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Table of contents
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% Section 1
+\section{Introduction}
+
+\begin{frame}{Cardinality Estimation at First Glance}
+\begin{figure}
+    \includegraphics[width=0.7\textwidth]{figs/ce1}
+\end{figure} 
+
+\hl{\bf Key question}:
+How to come up with an {\bf accurate} estimate $\hat{q}$
+of $|Q(\boldsymbol{R})|$
+from the profile $s(\boldsymbol{R})$,
+as {\bf quickly} as possible?
+
+\end{frame}
+
+\begin{frame}{The Achilles Heel}
+\begin{alertblock}{Quoted from Guy Lohman~\cite{lohman2014query}: Is Query Optimization a "Solved" Problem?}
+    Everything in cost estimation depends upon how many rows will be processed, so the entire cost model is predicated upon the cardinality model. 
+    
+    ...
+
+    In my experience, the cost model may introduce errors of at most 30\% for a given cardinality, but the cardinality model can quite easily introduce errors of many orders of magnitude!
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{A Wish List}
+Following~\cite{abo2025pessimistic}, the good cardinality estimator (\ie~CE) should have:
+
+\vspace{2ex}
+\begin{itemize}
+\item {\bf Accuracy/Speed/Memory}: Good accuracy and efficiency.
+\item {\bf Locality}: Use statistics computed separately on each input relation.
+\item {\bf Composition}: Estimate from subquery estimates (\ie~optimal substructure).
+\item {\bf Combination}: Combine multiple statistics sources for better estimates.
+\item {\bf Incremental Updates}: Update statistics incrementally when data changes.
+\item {\bf Guarantees}: Provide theoretical guarantees for reasoning about decisions.
+\end{itemize}
+
+\end{frame}
+
+
+\section{Background}
+
+\begin{frame}{Review: Selective Estimation}
+
+Ngo~\cite{ngo2022information} summarized System-R-style selective estimation approaches as follows:
+\begin{table}[ht]
+\renewcommand{\arraystretch}{1.1} % Increase line height
+\centering
+\begin{tabular}{llcll}
+\toprule
+\textbf{Predicate $p$} & \textbf{Estimated size $s(p)$} & \textbf{Note} \\
+\midrule
+$\neg p'$ & $1 - s(p')$ & - \\
+$p_1 \land p_2$ & $s(p_1) \cdot s(p_2)$ & - \\
+$A = c$ & $1/d_A$ & $d_A=$ \# of dist. vals \\
+$A > c$ & ${(\max_A - c)}/{(\max_A - \min_A)}$ & if known \\
+$c_1 < A < c_2$ & ${(c_2 - c_1)}/{(\max_A - \min_A)}$ & if known \\
+$R(A, B) \bowtie S(B, C)$ & ${1}/{\max(d_B^R, d_B^S)}$ & \ie~$|R \bowtie S| \approx |R| \cdot |S| \cdot s(\bowtie)$ \\
+$A \;\texttt{IN}\; L$ & $\min\{1/2, s(A = c)|L|\}$ & $L:=$ literal set \\
+$A \;\texttt{IN}\; Q$ & $|Q|/|X|$ &  $Q:=$ subquery; $X$ is cross-prod \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}{Review: Sampling-based Estimation}
+\begin{itemize}
+\item {\bf Offline sampling}
+  \begin{itemize}
+    \item Pre-computes a uniform sample $R_{\text{sample}}\subseteq R$ of each relation, then estimates the size of the query output from the size of the query output over the sample~\footnote{Estimated using \href{https://en.wikipedia.org/wiki/Horvitz-Thompson_estimator}{Horvitz-Thompson's formula}.}.
+    \item \hl{\bf Pros}: Accurate (on single-relation query); Good compatibility with SQL operators.
+    \item \warn{\bf Cons}: Degrades to guessing (when no sampled tuple matches the query).
+  \end{itemize}
+
+\vspace{1ex}
+\item {\bf Online sampling}
+\begin{itemize}
+    \item Only sample tuples that join with already sampled tuples~\cite{li2016wander}.
+    \item \hl{\bf Pros}: Accurate~\cite{park2020g} (by resolving sampling collapse of offline sampling).
+    \item \warn{\bf Cons}: High latency (requires index accessing on every join column).
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Review: Learned Estimation}
+
+\begin{itemize}
+    \item {\bf Data-driven estimators}
+    \begin{itemize}
+        \item Train a {\em generative} ML model to learn the joint distribution $Pr(X,Y,\ldots)$ over all attributes in the database~\cite{wu2020bayescard,yang2020neurocard}.
+        \item \hl{\bf Pros}: A (lossy) compression of the full outer join of the database relations.
+    \end{itemize}
+
+    \vspace{1ex}
+    \item {\bf Query-driven estimators}
+    \begin{itemize}
+        \item Train a {\em discriminative} model to directly predict cardinality $\text{Est}(Q)$ from a workload of past queries and their true results.
+        \item \hl{\bf Pros}: Accurate on seen queries, simpler than full generative models.
+    \end{itemize}
+\end{itemize}
+
+\vspace{1ex}
+In general, 
+Learned CE aims to capture the query-data correlation empirically~\cite{kim2022learned,wang2020we}.
+
+\vspace{0.7ex}
+\warn{\bf However}, it suffers from (1) distribution shift, (2) intensive memory footprint, (3) limited support for query types and predicates~\cite{han2021cardinality}.
+\end{frame}
+
+
+\section{Pessimistic Cardinality Estimation}
+
+\begin{frame}{Prelim: Query Class}
+We focus on full conjunctive queries (FCQs)~\cite{DBLP:books/aw/AbiteboulHV95}.
+
+\begin{block}{Definition: conjunctive query (CQ) and full conjunctive query (FCQ).}
+    A conjunctive (or join) query $Q(\boldsymbol{X})$ is defined by:
+    \begin{equation}
+        Q(\boldsymbol{X}) := \bigwedge_{j\in [m]} R_j(\boldsymbol{Y_j}),
+    \end{equation}
+    where (1) $[m]:=\{1,2,\ldots,m\}$; (2) $\boldsymbol{Y_j}$ is the tuple of variables in $R_j$, and $\boldsymbol{Y_j}$ must have the same arity as $R_j$; (3) each variable occuring in $\boldsymbol{X}$ must appear in at least one $R_j$.
+
+\vspace{2ex}
+    We say $Q(\boldsymbol{X})$ is a {\bf full conjunctive query} when $\boldsymbol{X} = \bigcup_{j\in [m]} \boldsymbol{Y_j}$.
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Prelim: Query Class (Example)}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{cc}
+            \toprule
+            \textbf{source} & \textbf{target} \\
+            \midrule
+            A & B \\
+            B & C \\
+            C & A \\
+            \bottomrule
+            \end{tabular}
+            \caption{$R(\texttt{source}, \texttt{target})$ represents a directed graph.}
+        \end{table}
+
+        
+        \column{0.6\textwidth}
+        \begin{itemize}
+            \item $Q_1(X,Y,Z) = R(X,Y) \wedge R(Y,Z) \wedge R(Z,X)$
+            \item $Q_2(X) = R(X,Y) \wedge R(Y,Z) \wedge R(Z,X)$
+        \end{itemize}
+
+        \vspace{3ex}
+        In this example, $Q_1$ (FCQ) list all triangles in the directed graph, while $Q_2$ (CQ) lists all nodes that are part of a triangle, \ie~$Q_2 = \prod_{X}Q_1$. 
+        
+        \vspace{2ex}
+        By restricting the query to be FCQ, we can temporarily ignore the projection operations.
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Prelim: Statistics}
+We define statistics over database instance $\boldsymbol{D}$ with schema $\boldsymbol{R}$ following~\cite{abo2024join}.
+
+\vspace{1ex}
+\begin{itemize}
+    \item {\bf Abstract statistics} $\tau := (f, {\boldsymbol{X}})$
+    \begin{itemize}
+        \item $f : \{\boldsymbol{D}_{\boldsymbol{V}}\}_{\boldsymbol{V}\subseteq \text{Attr}(\boldsymbol{R})} \rightarrow \mathbb{R}$, where ${\boldsymbol{D}_{\boldsymbol{V}}}$ is the projection of $\boldsymbol{D}$ on attributes $\boldsymbol{V}$.
+        \vspace{1ex}
+        \item $\boldsymbol{X}$ is a set of attributes. We say $\tau$ is {\em guarded} by $R$ if $R\in\boldsymbol{R}$ and $\boldsymbol{X}\subseteq\text{Attr}(\boldsymbol{R})$.
+        \vspace{1ex}
+        \item If $\tau$ is guarded by $R$, then we can evaluate the statistics $\tau_{\boldsymbol{X}} := f(\boldsymbol{D}_{\boldsymbol{X}})$.
+    \end{itemize}
+    \vspace{1ex}
+    \begin{exampleblock}{Example: Abstract Statistics}
+        Consider an abstract (cardinality) statistics $\tau_1=(|\cdot|, \{A\})$, $\tau_2=(|\cdot|, \{A,B\})$, and $\tau_3=(|\cdot|, \{C\})$ over database instance $\boldsymbol{D}$ with a single relation $R(A, B)$.
+
+        \vspace{1ex}
+        Then $\tau_1$ and $\tau_2$ is guarded by $R$ and we can get $~\tau_{A}=|\prod_{A}(R)|,\tau_{AB} = |R|$; $\tau_{3}$ is not guarded by $R$ since $\{C\}\not\subseteq \{A,B\}$.
+    \end{exampleblock}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Prelim: Statistics (Cont.)}
+\begin{itemize}
+    \item {\bf Concrete statistics} $(\tau, B)$.
+    \begin{itemize}
+        \item $B\in\mathbb{R}$ is a threshold.
+        \vspace{1ex}
+        \item We denote by $\boldsymbol{D}\models (\tau, B)$ if $\tau$ is guarded by $R\in\boldsymbol{R}$ and $\tau_{\boldsymbol{X}} \leq B$.
+    \end{itemize}
+    \vspace{1ex}
+    \item {\bf Statistics set} $(\Sigma, \boldsymbol{B})$.
+    \begin{itemize}
+        \item $\Sigma:=\{\tau_i\}_{i=1}^{s}$, $\boldsymbol{B}:=\{B_i\}_{i=1}^{s}$.
+        \vspace{1ex}
+        \item We say $\Sigma$ is {\em guarded} by the query $\boldsymbol{R}$ if $\forall i\in [s], \exists R\in \boldsymbol{R}, \tau_i$ is guarded by $R$.
+        \vspace{1ex}
+        \item We denote by ${\boldsymbol{D}}\models (\Sigma, \boldsymbol{B})$ if $\forall i\in [s], {\boldsymbol{D}} \models (\tau_i, B_i)$.
+    \end{itemize}
+\end{itemize}
+
+\vspace{2ex}
+\warn{\bf Remark}: Cross-relation statistics are not permitted here by definition due to locality concerns (see the wish list mentioned earlier).
+\end{frame}
+
+\begin{frame}{Prelim: Pessimistic Cardinality Estimation}
+Now we can formally define the problem of pessimistic cardinality estimation~\cite{abo2024join}:
+\begin{block}{Problem: Pessimistic Cardinality Estimation (PCE)}
+    Given (1) a full conjunctive query $Q(\boldsymbol{X})$ and 
+    (2) a set of statistics $(\Sigma, \boldsymbol{B})$ guarded by the (schema of the) query $\boldsymbol{Q}$,
+    find a bound $U\in\mathbb{R}$ such that:
+    \begin{equation*}
+        \forall \boldsymbol{D} \models (\Sigma, \boldsymbol{B}), \quad |Q(\boldsymbol{D})| \leq U.
+    \end{equation*}
+\end{block}
+
+\vspace{2ex}
+\hl{\bf Tightness}: The bound $U$ is {\em tight} if there exists a database instance $\boldsymbol{D}$ such that $\boldsymbol{D}\models (\Sigma, \boldsymbol{B})$ and $|Q(\boldsymbol{D})| = U$.
+\end{frame}
+
+\begin{frame}{PCE Bounds}
+    We now review the intuitions and techniques behind existing PCE bounds.
+    \vspace{1ex}
+    \begin{itemize}
+        \item {\bf AGM Bound}~\cite{atserias2013size} (FOCS'08).
+        \begin{itemize}
+            \item Tight. Fractional edge cover.
+        \end{itemize}
+        \item {\bf Chain Bound}~\cite{abo2016computing} (PODS'16).
+        \begin{itemize}
+            \item Not tight. Conditional edge cover.
+        \end{itemize}
+        \item {\bf Polymatroid Bound}~\cite{abo2017shannon} (PODS'17). 
+        \begin{itemize}
+            \item Not tight. Shannon-type inequalities, degree sequences and $\ell_p$-norms.
+        \end{itemize}
+        \item {\bf Degree Sequence Bound}~\cite{deeds2022degree,deeds2023safebound} (ICDT'23, SIGMOD'23).
+        \begin{itemize}
+            \item Tight for Berge-acyclic queries. Degree sequence.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{The AGM Bound: A Warm-up Example}
+\begin{columns}
+\column{0.37\textwidth}
+\begin{figure}
+    \includegraphics[width=0.7\textwidth]{figs/C3}
+    \caption{A hypergraph $\mathcal{H}=(\boldsymbol{V},\boldsymbol{E})$ for the 3-cycle query:
+    $C_3=R(X,Y)\wedge S(Y,Z)\wedge T(Z,X)$, where
+    $\boldsymbol{V}=\{R,S,T\}$ and 
+    $\boldsymbol{E}=\bigcup \boldsymbol{R}=\{X,Y,Z\}$}.
+\end{figure} 
+
+\column{0.62\textwidth}
+
+It's obvious that $|C_3|\leq |R|\cdot|S|\cdot|T|$. 
+
+\vspace{2ex}
+Then a \hl{\bf key insight} is:
+$|R(X,Y)\wedge S(Y,Z)\wedge T(Z,X)| \leq |R(X,Y)\wedge S(Y,Z)|$.
+
+\vspace{3ex}
+This is because $R(X,Y)\wedge S(Y,Z)$ already {\bf covers} all variables in $C_3$ and $T(Z,X)$ cannot contribute any new tuples to the result.
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{The AGM Bound: Integral Edge Cover}
+We can then reduce PCE to the edge cover problem.
+\vspace{1ex}
+\begin{block}{Theorem: Integral Edge Cover for PCE.}
+For FCQ $Q(\boldsymbol{X})=\bigwedge_{i=1}^{k}R_i(\boldsymbol{U_i})$, the following inequality holds:
+\begin{equation}
+    |Q| \leq \min_{\mathbf{w} \in \{0,1\}^k} \prod_{i=1}^{k} |R_i|^{w_i}
+    \quad \textit{s.t.} \quad 
+    \forall X \in \boldsymbol{X}: \sum_{i: X \in \boldsymbol{U_i}} w_i \geq 1.
+\end{equation}
+\end{block}
+\vspace{1ex}
+In this way, $|C_3| \leq \min(|R|\cdot |S|, |R|\cdot |T|, |S|\cdot |T|)$.
+\end{frame}
+
+\begin{frame}{The AGM Bound: Fractional Edge Cover}
+The AGM bound relaxes the integral edge cover to a \hl{\bf fractional} edge cover.
+\vspace{1ex}
+\begin{block}{Theorem: Fractional Edge Cover for PCE (AGM Bound).}
+For FCQ $Q(\boldsymbol{X})=\bigwedge_{i=1}^{k}R_i(\boldsymbol{U_i})$, the following inequality holds:
+\begin{equation}
+    |Q| \leq \min_{\hl{\mathbf{w} \in \mathbb{R}_+^k}} \prod_{i=1}^{k} |R_i|^{w_i}
+    \quad \textit{s.t.} \quad 
+    \forall X \in \boldsymbol{X}: \sum_{i: X \in \boldsymbol{U_i}} w_i \geq 1.
+\end{equation}
+\end{block}
+\vspace{1ex}
+In this way, $|C_3| \leq \min(|R|\cdot |S|, |R|\cdot |T|, |S|\cdot |T|, \hl{(|R|\cdot |S|\cdot |T|)^{1/2}})$.
+\end{frame}
+
+\begin{frame}{The AGM Bound: Pros and Cons}
+   \begin{itemize}
+       \item \hl{\bf Pros:}
+       \begin{itemize}
+           \item The AGM bound is computable in PTIME in the size of the query $Q$.
+           \item The AGM bound is guaranteed to be tight.
+       \end{itemize}
+       \vspace{2ex}
+       \item \warn{\bf Cons:}
+       \begin{itemize}
+           \item Limited statistics: just the relation cardinalities.
+           \item Degrades to integral edge cover for acyclic queries.
+       \end{itemize}
+   \end{itemize}
+\end{frame}
+
+\begin{frame}{The Chain Bound: A Warm-up Example}
+\hl{Question}: Can we do better by introducing new statistics?
+
+\vspace{2ex}
+\begin{exampleblock}{Example: Degree of Attributes}
+    Consider an FCQ $Q(\text{state}, \text{city}, \text{zip}) = R(\text{state}, \text{city}) \wedge S(\text{city}, \text{zip})$.
+    
+    \vspace{2ex}
+    Assume that it is know that (1) no city contains more than 64 zip codes, and (2) no city is in more than one state.
+
+    \vspace{2ex}
+    Then the following assertion holds:
+    $|Q| \leq \min(64\cdot|R|, 1\cdot |S|, |R|\cdot|S|)$.
+
+\end{exampleblock}
+
+\vspace{1ex}
+In this example, we improve the AGM bound (\ie~$|R|\cdot|S|$) by introducing new statistics (degree of attributes).
+\end{frame}
+
+\begin{frame}{The Chain Bound: Degree Sequence}
+We now introduce the degree sequence to formalize the concept of {\em degree of attrs}.
+\vspace{1ex}
+\begin{block}{Definition: Degree Sequence}
+    Fix a relation instance $R$, 
+    and two sets of variables $X, Y \subseteq \text{Attrs}(R)$. 
+    The degree sequence from $X$ to $Y$ in $R$ is the sequence
+    \begin{equation*}
+        \deg_R (Y \mid X) := (d_1, d_2, \ldots, d_N),
+    \end{equation*}
+    obtained as follows: (1) Compute the domain of $X$, $\text{Dom}(R.X) = \{x_1, \ldots, x_N\}$, (2) denote by $d_i = |\sigma_{X = x_i} (\prod_{XY} (R))|$ the degree (or frequency) of $x_i$, and (3) sort the values in the domain $\text{Dom}(R.X)$ such that their degrees are decreasing $d_1 \geq \cdots \geq d_N$.
+\end{block}
+
+    \end{frame}
+
+\begin{frame}{The Chain Bound: Examples of Degree Sequences}
+    \begin{columns}
+\column{0.2\textwidth}
+\[
+R =
+\begin{array}{c|c|c}
+\toprule
+\textbf{X} & \textbf{Y} & \textbf{Z} \\
+\midrule
+1 & a & \ldots \\
+1 & b & \ldots \\
+1 & b & \ldots \\
+2 & a & \ldots \\
+2 & b & \ldots \\
+3 & b & \ldots \\
+3 & c & \ldots \\
+4 & d & \ldots \\
+\bottomrule
+\end{array}
+\]
+\column{0.8\textwidth}
+
+\begin{itemize}
+    \item $\deg_R (Y \mid X) = (2,2,2,1)$
+    \begin{itemize}
+        \item \ie~$(|\{(1,a),(1,b)\}|, |\{(2,a),(2,b)\}|, |\{(3,b), (3,c)\}|, |\{(4,d)\}|)$
+    \end{itemize}
+
+    \vspace{2ex}
+    \item $\deg_R (YZ \mid X) = (3,2,2,1)$
+    \item $\deg_R (YZ \mid XY) = \deg_R (Z \mid XY) = (2,1,1,1,1,1,1)$
+    \item $\deg_R (XYZ \mid \emptyset) = (|R|) = (8)$
+\end{itemize}
+
+\vspace{2ex}
+$\ell_\infty$-norms are employed to interprete the max-degree in the sequence.
+\vspace{-2ex}
+\begin{equation*}
+    \|\deg_R (Y \mid X)\|_\infty = \left(\sum_{i=1}^{N} d_i^\infty\right)^{1/\infty} = \max_{i\in [N]} d_i = d_1.
+\end{equation*}
+\end{columns}
+\end{frame}
+
+\begin{frame}{The Chain Bound: Conditional Edge Cover}
+Now we can formally define the chain bound.
+
+\vspace{2ex}
+\begin{block}{Theorem: Conditional Edge Cover for PCE (Chain Bound).}
+For FCQ $Q(\boldsymbol{X})=\bigwedge_{i=1}^{k}R_i(\boldsymbol{U_i})$, the following inequality holds:
+\begin{equation}
+    |Q| \leq \min_{\mathbf{w} \in \mathbb{R}_+^k} \prod_{i=1}^{k} \|\deg_{R_{j_i}}(\boldsymbol{Y_i} \mid \boldsymbol{X_i})\|_\infty^{w_i}
+    \quad \text{s.t.} \quad 
+    \forall X \in \boldsymbol{X}: \sum_{\substack{i: X \in \boldsymbol{Y_i}, \\ \boldsymbol{X_i} \subseteq \bigcup_{j=0}^{i-1}\boldsymbol{X_j}}} w_i \geq 1.
+\end{equation}
+\end{block}
+
+\vspace{1ex}
+Note that $|R| = \|\deg_{R}(* \mid \emptyset)\|_\infty$. Therefore, the chain bound strickly generalizes the AGM bound.
+
+\end{frame}
+
+\begin{frame}{The Chain Bound: Revisit the Example}
+
+\begin{exampleblock}{Example: Degree of Attributes}
+    Consider an FCQ $Q(\text{state}, \text{city}, \text{zip}) = R(\text{state}, \text{city}) \wedge S(\text{city}, \text{zip})$.
+    
+    \vspace{2ex}
+    Assume that it is know that (1) no city contains more than 64 zip codes, and (2) no city is in more than one state.
+
+    \vspace{2ex}
+    Then the following assertion holds:
+    $|Q| \leq \min(64\cdot|R|, 1\cdot |S|, |R|\cdot|S|)$.
+
+\end{exampleblock} 
+
+\vspace{2ex}
+We rewrite the inequality $|Q|\leq 64\cdot |R|$ with the formal notation.
+$|Q|\leq \|\deg_{R}( \text{\{state,city\}} \mid \emptyset)\|_\infty\cdot\|\deg_{S}( \text{\{city,zip\}} \mid \{city\})\|_\infty \leq |R|\cdot |S|$.
+
+\vspace{2ex}
+The existing attributes can serve as conditions for subsequent query operations, thus creating a ``\hl{\bf chain}" of dependencies between relations.
+
+\end{frame}
+
+\begin{frame}{The Chain Bound: Pros and Cons}
+
+   \begin{itemize}
+       \item \hl{\bf Pros:}
+       \begin{itemize}
+           \item Introduced max-degree statistics.
+           \item Outperforms the AGM bound on acyclic queries.
+           \item When the set of statistics (\ie~max-degrees) is {\em acyclic}, chain bound is both tight and computable in PTIME.
+       \end{itemize}
+       \vspace{2ex}
+       \item \warn{\bf Cons:}
+       \begin{itemize}
+           \item The chain introduces the dependencies between relations.
+           \item Enumerating all possible chains (\ie~query orders) introduce exponential complexity.
+           \item Chain bound is not tight in general.
+       \end{itemize}
+   \end{itemize}
+    
+\end{frame}
+
+
+\begin{frame}{The Polymatroid Bound: Intuition \& Challenge}
+\begin{itemize}
+    \item AGM bound and Chain bound only use the $\ell_\infty$-norms of the degree sequences. Can we do better by using other norms?
+
+    \vspace{2ex}
+    \item \warn{\bf But}, how to integrate these statistics?
+\end{itemize}
+
+\vspace{5ex}
+\hl{\bf The key is information theory!}
+\end{frame}
+
+\begin{frame}{The Polymatroid Bound: Background on Information Theory}
+Let $X$ be a finite random variable, with outcomes $x_1, x_2, \ldots, x_N$ and probability function $\text{Pr}$, its entropy is:
+\begin{equation}
+    h(X) := -\sum_{i=1}^{N} \text{Pr}(x_i) \log \text{Pr}(x_i),
+\end{equation}
+where $\log$ is in base 2.
+It always holds that
+\begin{equation}
+    \label{eq:max_entropy}
+    0\leq h(X) \leq \log N, \quad h(X) = \log N~\text{iff}~\forall i\in [N],~\text{Pr}(x_i) = 1/N.
+\end{equation}
+The conditional entropy is defined as:
+\begin{equation}
+    h(U \mid V) := h(UV) - h(V).
+\end{equation}
+\end{frame}
+
+
+\begin{frame}{The Polymatroid Bound: Background on Information Theory (Cont.)}
+Given $n$ jointly distributed random variables $\boldsymbol{X}=\{X_1,\ldots,X_n\}$, we denote {\em entropic vector} $\boldsymbol{h}\in \mathbb{R}_{+}^{2^{[n]}}$ by $h_\alpha := h(\boldsymbol{X_\alpha})$ for $\alpha \in [n]$, where $\boldsymbol{X}_\alpha$ is the joint random variable $(X_i)_{i\in\alpha}$.\looseness=-1
+
+\vspace{2ex}
+A {\em polymatroid} is a vector $\boldsymbol{h}\in \mathbb{R}_{+}^{2^{[n]}}$ that satisfies the basic Shannon inequalities:
+\begin{itemize}
+    \item $h(\emptyset) = 0$
+    \item {\bf Monotonicity}: $h(U\cup V) \geq h(U)$
+    \item {\bf Submodularity}: $h(U\cup V) + h(U\cap V) \leq h(U) + h(V)$
+\end{itemize}
+
+\vspace{2ex}
+\warn{\bf Remark}: Let $\Gamma^*_n\subseteq \mathbb{R}_{+}^{2^{[n]}}$ is the set of all {\em entropic vectors} and $\Gamma_n \subseteq \mathbb{R}_{+}^{2^{[n]}}$ is the set of all {\em polymatroids}, then
+\begin{equation}
+    \label{eq:entropic_poly}
+    \Gamma^*_n \subseteq \Gamma_n.
+\end{equation}
+
+
+\end{frame}
+
+\begin{frame}{The Polymatroid Bound: Bridging PCE and Information Theory}
+According to Eq.~\ref{eq:max_entropy}, the cardinality of a relation $R(\boldsymbol{U})$ is bounded by its entropy:
+\begin{equation}
+    |R| \leq 2^{h(\boldsymbol{U})}.
+\end{equation}
+
+Therefore, we can formulate the PCE problem as an optimization problem:
+\begin{block}{Problem: Identifying maximum entropy.}
+\begin{equation}
+\label{eq:entropy_opt}
+    \max_{\boldsymbol{h}\in\Gamma_n} h(\boldsymbol{U}) \quad \textit{s.t.} \quad \forall U,V\subseteq \boldsymbol{U},
+    \begin{cases}
+        h(\emptyset) = 0,\\
+        h(U\cup V) \geq h(U),\\
+        h(U\cup V) + h(U\cap V) \leq h(U) + h(V).
+    \end{cases}
+\end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}{The Polymatroid Bound: Integrating Statistics}
+Statistics on the query data can be used to constrain the optimization problem~\ref{eq:entropy_opt}.
+
+\begin{block}{Theorem: $\ell_p$-Inequality}
+    Consider $n$ finite random variables $X_1,\ldots, X_n$, and let relation $R(X_1,\ldots,X_n)$ be their set of outcomes. Then, for any subsets of variables $U,V \subseteq \text{Attrs}(R)$ and any $p\in(0,\infty]$, the following hold~\cite{abo2024join}:
+    \begin{equation}
+        \label{eq:lp_inequality}
+        \frac{1}{p}h(U) + h(V\mid U) \leq \log\|\deg_{R}(V\mid U)\|_p.
+    \end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}{The Polymatroid Bound: Compute the Bound}
+    Using Eq.~\ref{eq:lp_inequality}, we can compute the polymatroid bound as follows:
+\vspace{2ex}
+\begin{block}{Problem: Compute polymatroid bound.}
+Assume we have a set of statistics of $\ell_p$-norms $(\Sigma, \boldsymbol{B})$ guarded by the query $Q$. Then we can compute the polymatroid bound as follows:
+
+\vspace{-3ex}
+\begin{equation}
+    \max_{\boldsymbol{h}\in\Gamma_n} h(\boldsymbol{U}) \quad \textit{s.t.} \quad \forall U,V\subseteq \boldsymbol{U},
+    \begin{cases}
+        h(\emptyset) = 0,\\
+        h(U\cup V) \geq h(U),\\
+        h(U\cup V) + h(U\cap V) \leq h(U) + h(V),\\
+        \forall (\sigma,B)\in(\Sigma, \boldsymbol{B}),~\text{Eq.}~\ref{eq:lp_inequality}~\text{holds}.
+    \end{cases}
+\end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}{The Polymatroid Bound: The Tightness}
+    Recall Expr.~\ref{eq:entropic_poly}, $\Gamma^*_n \subseteq \Gamma_n$\footnote{Refer to \href{https://en.wikipedia.org/wiki/Entropic_vector\#Non-Shannon-type_inequalities}{Non-Shannon-type inequalities} for more details.},
+    the computed polymatroid bound may not related to a valid entropic vector.
+    Therefore, the polymatroid bound is not tight in general.
+
+    \vspace{3ex}
+    Fortunately, the polymatroid bound is guaranteed to be tight when degree sequences in statistics are {\em simple}, \ie~
+    $\forall \deg_R(V\mid U), |U| \leq 1$.
+
+
+\end{frame}
+
+\begin{frame}{The Polymatroid Bound: Pros and Cons}
+      \begin{itemize}
+       \item \hl{\bf Pros:}
+       \begin{itemize}
+           \item The polymatroid bound generalizes both the AGM bound and the Chain bound.
+           \item It's compatible with group-by (and select distinct) clauses.
+           \item When all statistics are simple degree sequences, it's provably tight.
+       \end{itemize}
+       \vspace{2ex}
+       \item \warn{\bf Cons:}
+       \begin{itemize}
+           \item The inference time is exponential in the number of query variables.
+           \item The polymatroid bound is not tight in general.
+       \end{itemize}
+   \end{itemize} 
+\end{frame}
+
+
+\begin{frame}{The Degree Sequence Bound: A Warm-up Example}
+\begin{exampleblock}{Example: The Degree Sequence Bound}
+    Consider an FCQ $J_2(X,Y,Z) = R(X,Y) \wedge S(Y,Z)$, and assume that the degree sequence of $R.Y$ and $S.Y$ are:
+
+    \begin{equation*}
+        \deg_R(*\mid Y) = (a_1,a_2,\ldots), \quad \deg_S(*\mid Y) = (b_1,b_2,\ldots).
+    \end{equation*}
+    
+    \vspace{2ex}
+    Then the following inequality holds:
+    \begin{equation}
+        |J_2| \leq \sum_{i=1}^{\min(|R|,|S|)} a_i\cdot b_i.
+    \end{equation}
+\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}{The Degree Sequence Bound: Intuition}
+    Instead of only accessing $\ell_p$-norms of the degree sequences, degree sequence bound accesses the \hl{{\em full} degree sequences} of the relations in the query.
+
+    \vspace{5ex}
+    For Berge-acyclic queries\footnote{Refer to \href{https://en.wikipedia.org/wiki/Hypergraph\#Berge_cycles}{Berge cycles} for more details.}, the degree sequence bound is guaranteed to be tight.
+    
+    \vspace{2ex}
+    In this case, the degree sequence bound is also better than the chain bound since $\sum_i a_i b_i \leq a_1 \sum_i b_i = a_1 |S|$, and similarly $\sum_i a_i b_i \leq |R|b_1$.
+
+\end{frame}
+
+\begin{frame}{The Degree Sequence Bound: Pros and Cons}
+       \begin{itemize}
+       \item \hl{\bf Pros:}
+       \begin{itemize}
+           \item The degree sequence bound can be computed in linear time in the size of the (compressed) degree sequences.
+           \item It's compositional, \ie~can be applied to subqueries.
+           \item More accurate than density-based estimators.
+           \item It's provably tight for Berge-acyclic queries.
+       \end{itemize}
+       \vspace{2ex}
+       \item \warn{\bf Cons:}
+       \begin{itemize}
+           \item It's limited to Berge-acyclic queries.
+           \item More memory footprint.
+       \end{itemize}
+   \end{itemize}
+\end{frame}
+
+
+
+\section{Performance Evaluation}
+
+\begin{frame}{Evaluation of SOTA PCE}
+    We report the evaluation results of the state-of-the-art LpBound~\cite{zhang2025lpbound}, which builds upon the polymatroid bound~\cite{abo2024join} and chain bound~\cite{abo2016computing}.
+        
+        \vspace{2ex}
+        \textbf{System Configuration:}
+
+        \begin{itemize}
+            \item \textbf{Hardware}: Intel Xeon Silver 4214 (48 cores) with 193GB memory, running Debian GNU/Linux 10 (buster).
+            \item \textbf{PostgreSQL}: 4GB shared memory, 2GB work memory, 32GB implicit OS cache, and 6 max parallel workers. Indices enabled on primary/foreign keys.
+            \item \textbf{LpBound}: Uses DuckDB for statistics computation and HiGHS 1.7.2~\cite{huangfu2018parallelizing} for linear program solving.
+        \end{itemize}
+    \end{frame}
+
+\begin{frame}{LpBound: Effectiveness}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.82\textwidth]{figs/err_eval.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{LpBound: Effectiveness (Cont.)}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{figs/err_eval_sm_gb.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{LpBound: Efficiency}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/time_eval.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{LpBound: Efficiency (Cont.)}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{figs/time_stat.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{LpBound: Efficiency (Cont.)}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.99\textwidth]{figs/time_postgres_eval.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{LpBound: How Many $\ell_p$-Norms?}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{figs/eff_num_norms.png}
+    \caption{The amount of useful norms follows the  law of diminishing returns: Plotting the division of estimation errors for the norms $\{1, \ldots , k, \infty\}$ and  $\{1, \ldots , 30, \infty\}$, averaged over the 70 JOBlight queries.}
+\end{figure}
+\end{frame}
+
+
+\section{Conclusion}
+\begin{frame}{Back to the Wish List}
+
+As summarized by~\cite{abo2025pessimistic}:
+\begin{itemize}
+\item {\bf Accuracy/Speed/Memory}: PCE improves the performance of expensive SQL, but suffers from a regression for cheap queries.
+\item \hl{\bf Locality}: Only use statistics collected on each relation independently.
+\item {\bf Composition}: Degree sequence bound is compositional, while polymatroid bound are not (\ie~needs to estimate from scratch).
+\item \hl{\bf Combination}: PCE can be combined: simply taking the minima.
+\item \warn{\bf Incremental Updates}: No RDBMS updates its statistics incrementally (because it would slow down OLTP workload, especially because it requires acquiring a lock).\looseness=-1
+\item \hl{\bf Guarantees}: PCE provides one-side guarantee.
+\end{itemize}
+\end{frame}
+
+
+% Reference from a .bib file
+\section{References}
+\begin{frame}[allowframebreaks]{References}
+    % \nocite{*}
+    \renewcommand{\refname}{References}
+    \bibliographystyle{plain}
+    \bibliography{references}
+\end{frame}
+
+\end{document}
