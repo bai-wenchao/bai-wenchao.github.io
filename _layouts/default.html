@@ -42,7 +42,8 @@
 
     <footer class="footer">
       <div class="container">
-        <p>&copy; {{ "now" | date: "%Y" }} {{ site.author.name }}. All rights reserved.</p>
+        <p>&copy; {{ "now" | date: "%Y" }} {{ site.author.name }}. All rights reserved.<br>
+        Last updated: {{ site.time | date: "%B %d, %Y" }}</p>
         <div class="social-links">
           {% if site.social.google_scholar %}
             <a href="{{ site.social.google_scholar }}" target="_blank" rel="noopener noreferrer">
