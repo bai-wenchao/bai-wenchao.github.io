@@ -28,9 +28,8 @@ This website now uses a modular configuration-driven approach where content is o
 
 ### `config/site.json` - Main Configuration
 This is the entry point that defines:
-- Site metadata and version
 - List of all content configuration files to load
-- Site data (author info, social links)
+- No duplicated data - keeps the config structure clean
 
 ### `config/profile.json` - Personal Information
 Contains:
@@ -249,7 +248,7 @@ Add to the `research.areas` array:
 4. **Modular Loading**: Content loads in parallel for better performance
 5. **Scalability**: Easy to add new content sections by creating new config files
 6. **Separation of Concerns**: Layout (HTML) is separate from content (JSON)
-7. **Template Support**: Still works with Jekyll variables
+7. **No Data Duplication**: Clean configuration structure without redundancy
 8. **Error Resilience**: If one config fails to load, others still work
 
 ## Technical Notes

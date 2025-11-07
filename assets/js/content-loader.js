@@ -6,7 +6,7 @@ class ContentLoader {
 
   async loadConfig() {
     try {
-      // Load the main site configuration to get the list of configs
+      // Load the site configuration to get the list of configs
       const siteResponse = await fetch('/config/site.json');
       const siteConfig = await siteResponse.json();
 
