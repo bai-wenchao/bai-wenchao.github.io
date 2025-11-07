@@ -1,19 +1,16 @@
 class ContentLoader {
   constructor() {
     this.config = {};
-    this.siteConfig = {};
     this.isLoaded = false;
   }
 
   async loadConfig() {
     try {
-      // First load the main site configuration
+      // Load the main site configuration to get the list of configs
       const siteResponse = await fetch('/config/site.json');
       const siteConfig = await siteResponse.json();
 
-      this.siteConfig = siteConfig.site_data;
-
-      // Then load all content configs in parallel
+      // Load all content configs in parallel
       const configPromises = siteConfig.configs.map(async (configPath) => {
         try {
           const response = await fetch(`/${configPath}`);
@@ -32,54 +29,12 @@ class ContentLoader {
         return { ...merged, ...config };
       }, {});
 
-      this.processTemplateVariables();
       this.isLoaded = true;
 
     } catch (error) {
       console.error('Error loading site configuration:', error);
       this.isLoaded = false;
     }
-  }
-
-  processTemplateVariables() {
-    if (!this.config) return;
-
-    const replaceTemplateVars = (text) => {
-      if (typeof text !== 'string') return text;
-
-      return text.replace(/\{\{([^}]+)\}\}/g, (match, path) => {
-        const keys = path.replace('site.', '').split('.');
-        let value = this.siteConfig;
-
-        for (const key of keys) {
-          if (value && typeof value === 'object' && key in value) {
-            value = value[key];
-          } else {
-            return match; // Return original if not found
-          }
-        }
-
-        return value || match;
-      });
-    };
-
-    // Process all template variables in the config
-    const processObject = (obj) => {
-      if (typeof obj === 'string') {
-        return replaceTemplateVars(obj);
-      } else if (Array.isArray(obj)) {
-        return obj.map(item => processObject(item));
-      } else if (obj && typeof obj === 'object') {
-        const result = {};
-        for (const [key, value] of Object.entries(obj)) {
-          result[key] = processObject(value);
-        }
-        return result;
-      }
-      return obj;
-    };
-
-    this.config = processObject(this.config);
   }
 
   renderHero() {

@@ -52,10 +52,12 @@ Contains:
 ## How to Update Content
 
 ### Quick Reference
-- **Personal Info**: Edit `config/profile.json`
+- **Personal Info & Contact**: Edit `config/profile.json` (contains actual values)
 - **Research & Publications**: Edit `config/research.json`
 - **News & Posts**: Edit `config/content.json`
-- **Site-wide Settings**: Edit `config/site.json`
+- **Site Structure**: Edit `config/site.json` (config file list only)
+
+**Note**: Template variables are not used. All values are hardcoded directly in the config files for reliable rendering.
 
 ### Adding News Items
 Add to the `news.items` array in `config/content.json`:
@@ -268,10 +270,11 @@ Add to the `research.areas` array:
 - Verify JSON syntax is correct in all config files
 - Check that `config/site.json` lists all required config files
 
-**Template variables not working?**
-- Ensure variables exist in `config/site.json` under `site_data`
-- Check variable names match exactly in template strings
-- Template variables are case-sensitive
+**Content not displaying correctly?**
+- Ensure all values are hardcoded in config files (no template variables)
+- Check JSON syntax is correct in all config files
+- Verify the file is listed in `config/site.json` configs array
+- Template variables are not supported - use actual values instead
 
 **Some content missing?**
 - Check if individual config files failed to load (console errors)

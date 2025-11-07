@@ -22,7 +22,7 @@
   },
   "publications": {
     "title": "Selected Publications",
-    "show_all_link": "{{ site.social.google_scholar }}",
+    "show_all_link": "https://scholar.google.com/citations?user=DurVj1gAAAAJ&hl=en",
     "items": [
       {
         "authors": "<strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, and Jiahui Jin*.",
