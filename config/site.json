@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "description": "Main configuration file that references all other content configs"
+  },
+  "configs": [
+    "config/profile.json",
+    "config/research.json",
+    "config/content.json"
+  ],
+  "site_data": {
+    "author": {
+      "name": "Wenchao Bai",
+      "name_cn": "白文超",
+      "title": "Ph.D. Candidate",
+      "email": "wbai@seu.edu.cn",
+      "affiliation": "Southeast University",
+      "department": "Department of Computer Science and Engineering",
+      "campus": "Jiulonghu Campus",
+      "room": "Room 431, CS Building",
+      "address": "Nanjing, Jiangsu, China",
+      "postal_code": "211189"
+    },
+    "social": {
+      "google_scholar": "https://scholar.google.com/citations?user=DurVj1gAAAAJ&hl=en"
+    }
+  }
+}

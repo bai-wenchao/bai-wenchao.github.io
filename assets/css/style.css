@@ -5,6 +5,22 @@
   box-sizing: border-box;
 }
 
+/* Loading indicator */
+.loading-indicator {
+  font-size: 1.2rem;
+  margin: 100px 0;
+}
+
+.loading-indicator i {
+  margin-right: 10px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;

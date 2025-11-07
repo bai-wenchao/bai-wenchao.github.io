@@ -1,0 +1,40 @@
+{
+  "hero": {
+    "title": "{{ site.author.name }} ({{ site.author.name_cn }})",
+    "subtitle": "{{ site.author.title }}",
+    "affiliation": "{{ site.author.affiliation }}",
+    "description": "Welcome to my academic homepage. Here you'll find information about my research, publications, and professional activities.",
+    "profile_image": "/assets/images/profile-photo.jpg"
+  },
+  "about": {
+    "title": "About Me",
+    "sections": [
+      {
+        "text": "I am a {{ site.author.title }} at {{ site.author.affiliation }}, working in the {{ site.author.department }} since September 2022, advised by <a href=\"https://jujuhoo.github.io/\" target=\"_blank\">A. Prof. Jiahui Jin</a>."
+      },
+      {
+        "text": "From July 2023, I am also a research intern at Shenzhen Institute of Computing Sciences, honorably advised by <a href=\"https://homepages.inf.ed.ac.uk/wenfei/\" target=\"_blank\">Prof. Wenfei Fan</a> and collaborating with <a href=\"https://shuhaoliu.github.io/#gsc.tab=0\" target=\"_blank\">Dr. Shuhao Liu</a>, <a href=\"https://weilongren.github.io/\" target=\"_blank\">Dr. Weilong Ren</a>, and <a href=\"https://www.linkedin.com/in/zihuan-xu-36408ba0/?originalSubdomain=hk\" target=\"_blank\">Dr. Zihuan Xu</a>."
+      },
+      {
+        "text": "I am always open to collaborations and discussions about research opportunities, interdisciplinary projects, and applications of database systems and theories."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Contact",
+    "email": "{{ site.author.email }}",
+    "office": {
+      "room": "{{ site.author.room }}",
+      "affiliation": "{{ site.author.affiliation }}",
+      "campus": "{{ site.author.campus }}",
+      "postal_code": "{{ site.author.postal_code }}",
+      "address": "{{ site.author.address }}"
+    },
+    "intro": "I'm always interested in hearing about potential collaborations, research opportunities, or answering questions about my work."
+  },
+  "cv": {
+    "title": "Curriculum Vitae",
+    "description": "For a comprehensive overview of my academic background, research experience, publications, and professional activities, please refer to my curriculum vitae.",
+    "cv_link": "/assets/files/cv/cv.pdf"
+  }
+}

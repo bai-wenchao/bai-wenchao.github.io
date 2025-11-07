@@ -1,0 +1,71 @@
+{
+  "research": {
+    "title": "Research Interests",
+    "areas": [
+      {
+        "title": "Data Integration",
+        "description": "How to integrate external data from data lakes to enhance downstream ML model performance and SQL query quality."
+      },
+      {
+        "title": "Data Quality",
+        "description": "Ensuring data quality by identifying data duplication, inconsistency, and staleness in given datasets during data integration."
+      },
+      {
+        "title": "Data Systems",
+        "description": "Building high-performance data systems for limited resources by utilizing modern hardware (GPUs), efficient algorithms, and data structures."
+      },
+      {
+        "title": "Data Agent",
+        "description": "Building autonomous data systems in an agentic way for intelligent data management and processing."
+      }
+    ]
+  },
+  "publications": {
+    "title": "Selected Publications",
+    "show_all_link": "{{ site.social.google_scholar }}",
+    "items": [
+      {
+        "authors": "<strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, and Jiahui Jin*.",
+        "title": "Rule-Based Graph Cleaning with GPUs on a Single Machine",
+        "venue": "<em>Proceedings of the ACM Management of Data</em>, 2025",
+        "abstract": "This paper studies cost-effective graph cleaning with a single machine. We adopt a rule-based method that may embed machine learning models as predicates in the rules. Graph cleaning with the rules involves rule discovery, error detection and correction. These tasks are both computation-heavy and I/O-intensive as they repeatedly invoke costly graph pattern matching, and produce a large amount of a large volume of intermediate results, among other things. In light of these, no existing single-machine system is able to carry out these tasks even on not-too-large graphs, even using GPUs. Thus we develop MiniClean, a single-machine system for cleaning large graphs. It proposes (1) a workflow that better fits a single machine by pipelining CPU, GPU and I/O operations; (2) memory footprint reduction with bundled processing and data compression; and (3) a multi-mode parallel model for SIMD, pipelined and independent parallelism, and their scheduling to maximize CPU--GPU synergy. Using real-life graphs, we empirically verify that MiniClean outperforms the SOTA single-machine systems by at least 65.34X and multi-machine systems with 32 nodes by at least 8.09X.",
+        "category": "Data Quality",
+        "tags": ["Parallel System", "Single Machine System", "GPU Acceleration", "Entity Resolution", "Conflict Resolution"],
+        "links": [
+          {"text": "Paper", "url": "/assets/files/publications/25_miniclean/paper-full.pdf"},
+          {"text": "Slides", "url": "/assets/files/publications/25_miniclean/slides.pdf"},
+          {"text": "Poster", "url": "/assets/files/publications/25_miniclean/poster.pdf"},
+          {"text": "Docker Image", "url": "https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general"}
+        ],
+        "bibtex": "@article{miniclean_sigmod25,\n  title={Rule-Based Graph Cleaning with GPUs on a Single Machine},\n  author={Bai, Wenchao and Fan, Wenfei and Liu, Shuhao and Pang, Kehan and Zhu, Xiaoke and Jin, Jiahui},\n  journal={Proceedings of the ACM on Management of Data},\n  volume={3},\n  number={3},\n  pages={1--27},\n  year={2025},\n  publisher={ACM New York, NY, USA}\n}"
+      },
+      {
+        "authors": "<strong>Wenchao Bai</strong>, Wenfei Fan, Jiahui Jin, Daji Li, Jian Li, Shuhao Liu, Mingliang Ouyang, and Qiang Yuan.",
+        "title": "MiniClean: A Single-Machine System for Cleaning Big Graphs",
+        "venue": "<em>SIGMOD Demo Proposals</em>, 2025",
+        "abstract": "We demonstrate MiniClean, a single-machine system for cleaning large-scale graphs. MiniClean adopts a rule-based approach that unifies logic reasoning and machine learning, and supports rule discovery, error detection and error correction. To cope with repeated graph pattern matching and large intermediate results, MiniClean proposes (1) a pipelined workflow that coordinates CPU, GPU and I/O operations, (2) memory footprint reduction by bundled processing and data compression, and (3) a multi-mode parallel model that combines SIMD, pipelined, and independent parallelism to maximize CPU--GPU synergy. We demonstrate how MiniClean cleans real-life billion-scale graphs and outperforms a SOTA multi-machine system with a 32-node cluster by at least 8.09X.",
+        "category": "Data Quality",
+        "tags": ["Parallel System", "Single Machine System", "GPU Acceleration", "Entity Resolution", "Conflict Resolution"],
+        "links": [
+          {"text": "Paper", "url": "/assets/files/publications/25_miniclean_demo/paper.pdf"},
+          {"text": "Slides", "url": "/assets/files/publications/25_miniclean/slides.pdf"},
+          {"text": "Poster", "url": "/assets/files/publications/25_miniclean/poster.pdf"},
+          {"text": "Docker Image", "url": "https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general"}
+        ],
+        "bibtex": "@inproceedings{miniclean_sigmod_demo25,\n  title={MiniClean: A Single-Machine System for Cleaning Big Graphs},\n  author={Bai, Wenchao and Fan, Wenfei and Jin, Jiahui and Li, Daji and Li, Jian and Liu, Shuhao and Ouyang, Mingliang and Yuan, Qiang},\n  booktitle={Companion of the 2025 International Conference on Management of Data},\n  pages={27--30},\n  year={2025}\n}"
+      },
+      {
+        "authors": "Jiahui Jin, Zhendong Guo, <strong>Wenchao Bai</strong>, Biwei Wu, Xiang Liu, and Weiwei Wu.",
+        "title": "Congestion-Aware Stackelberg Pricing Game in Urban Internet-of-Things Networks: A Case Study",
+        "venue": "<em>Computer Networks</em>, 2024",
+        "abstract": "We consider a one-leader multi-follower Stackelberg pricing game in urban Internet-of-Things networks. The leader manages multiple services and sets service prices to maximize profit, while followers seek the most cost-effective services, taking into account service prices, service congestion, and individual locations. Existing approaches often simplify the game process by neglecting followers' locations, but they are not applicable to real-world complex spatial distributions. In this paper, we focus on the congestion-aware Stackelberg pricing game in urban Internet-of-Things networks, using electric vehicle charging as a case study. The game is reformulated as a mathematical program with equilibrium constraints (MPEC) that considers both congestion effects and followers' spatial distributions. To solve the MPEC, we introduce the Segmentation-based Pricing with ITERative Optimization (SPITER) algorithm, which converges to a local maximum. Additionally, optimization techniques are developed to improve the performance of solving SPITER in urban environments. We evaluate the performance of SPITER using extensive experiments with two real-life urban datasets, demonstrating the advantages of our model and illustrating SPITER's effectiveness and convergence.",
+        "category": "Game Theory",
+        "tags": ["Stackelberg Game", "Service Pricing"],
+        "links": [
+          {"text": "Paper", "url": "/assets/files/publications/25_miniclean_demo/paper.pdf"}
+        ],
+        "bibtex": "@article{spiter_cn24,\n  title={Congestion-Aware Stackelberg Pricing Game in Urban Internet-of-Things Networks: A Case Study},\n  author={Jin, Jiahui and Guo, Zhendong and Bai, Wenchao and Wu, Biwei and Liu, Xiang and Wu, Weiwei},\n  journal={Computer Networks},\n  volume={246},\n  pages={110405},\n  year={2024},\n  publisher={Elsevier}\n}"
+      }
+    ]
+  }
+}
