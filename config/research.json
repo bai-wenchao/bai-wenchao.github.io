@@ -34,7 +34,7 @@
         "links": [
           {"text": "Paper", "url": "https://openreview.net/forum?id=6qBusBS8jo"}
         ],
-        "bibtex": "@inproceedings{guo2025prillm,title={Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game},author={Anonymous},booktitle={The Fortieth AAAI Conference on Artificial Intelligence},year={2026}}"
+        "bibtex": "@inproceedings{guo2025prillm,\n  title={Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game},\n  author={Guo, Zhengdong and Bai, Wenchao and Jin, Jiahui},\n  booktitle={The Fortieth AAAI Conference on Artificial Intelligence},\n  year={2026}\n}"
       },
       {
         "authors": "<strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, and Jiahui Jin*.",
