@@ -24,15 +24,16 @@ class ContentLoader {
 
       const configs = await Promise.all(configPromises);
 
-      // Debug: Log individual configs
-      console.log('Individual configs loaded:');
-      configs.forEach((config, index) => {
-        console.log(`Config ${index}:`, config);
-      });
-
-      // Merge all configs
+      // Merge all configs with proper structure
       this.config = configs.reduce((merged, config) => {
-        return { ...merged, ...config };
+        // Special handling for news and posts configs
+        if (config.title === "Recent News" && config.items) {
+          return { ...merged, news: config };
+        } else if (config.title === "Latest Posts" && config.items) {
+          return { ...merged, posts: config };
+        } else {
+          return { ...merged, ...config };
+        }
       }, {});
 
       // Debug: Log loaded config
