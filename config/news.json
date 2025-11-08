@@ -1,0 +1,53 @@
+{
+  "title": "Recent News",
+  "items": [
+    {
+      "date": "2025-11-08",
+      "date_display": "Nov. 8, 2025",
+      "title": "AAAI-26 Paper Accepted",
+      "content": "Paper \"Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game\" accepted by AAAI-26 for oral presentation (17.6% acceptance rate). Congratulations to Zhendong!"
+    },
+    {
+      "date": "2025-10-16",
+      "date_display": "Oct. 16, 2025",
+      "title": "National Scholarship Awarded",
+      "content": "Received the National Scholarship (CNY 30,000) from the Ministry of Education of China."
+    },
+    {
+      "date": "2025-06-22",
+      "date_display": "June 22-27, 2025",
+      "title": "SIGMOD Conference in Berlin",
+      "content": "Presented \"Rule-Based Data Cleaning with GPUs on a Single Machine\" and demonstrated MiniClean system at SIGMOD 2025 in Berlin, Germany. First time visiting Europe - exciting experience!"
+    },
+    {
+      "date": "2025-05-13",
+      "date_display": "May 13, 2025",
+      "title": "SIGMOD Student Travel Award",
+      "content": "Received the SIGMOD Student Travel Award (USD 1,800) to attend and present at the SIGMOD 2025 conference."
+    },
+    {
+      "date": "2025-03-16",
+      "date_display": "March 16, 2025",
+      "title": "SIGMOD Demo Paper Accepted",
+      "content": "Our paper \"MiniClean: A Single-Machine System for Cleaning Big Graphs\" was accepted by SIGMOD Demo Proposals. Grateful to all collaborators!"
+    },
+    {
+      "date": "2025-01-31",
+      "date_display": "Jan. 31, 2025",
+      "title": "First First-Author Paper Accepted by SIGMOD",
+      "content": "Our paper \"Rule-Based Data Cleaning with GPUs on a Single Machine\" was accepted by SIGMOD! This marks my first first-author paper. Thank you to all collaborators!"
+    },
+    {
+      "date": "2023-07-04",
+      "date_display": "July 4, 2023",
+      "title": "Joined Shenzhen Institute of Computing Sciences",
+      "content": "Started as a research intern at Shenzhen Institute of Computing Sciences. An exciting journey begins!"
+    },
+    {
+      "date": "2022-09-01",
+      "date_display": "Sep. 1, 2022",
+      "title": "PhD Program Started",
+      "content": "Began my PhD program at Southeast University. Let the research journey begin!"
+    }
+  ]
+}
