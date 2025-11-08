@@ -24,6 +24,12 @@ class ContentLoader {
 
       const configs = await Promise.all(configPromises);
 
+      // Debug: Log individual configs
+      console.log('Individual configs loaded:');
+      configs.forEach((config, index) => {
+        console.log(`Config ${index}:`, config);
+      });
+
       // Merge all configs
       this.config = configs.reduce((merged, config) => {
         return { ...merged, ...config };
