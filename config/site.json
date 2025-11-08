@@ -2,6 +2,7 @@
   "configs": [
     "config/profile.json",
     "config/research.json",
-    "config/content.json"
+    "config/news.json",
+    "config/posts.json"
   ]
 }
