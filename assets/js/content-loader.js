@@ -29,6 +29,11 @@ class ContentLoader {
         return { ...merged, ...config };
       }, {});
 
+      // Debug: Log loaded config
+      console.log('Loaded config:', this.config);
+      console.log('News data:', this.config?.news);
+      console.log('Posts data:', this.config?.posts);
+
       this.isLoaded = true;
 
     } catch (error) {
@@ -82,7 +87,11 @@ class ContentLoader {
 
   renderNews() {
     const news = this.config?.news;
-    if (!news) return '';
+    console.log('renderNews called, news data:', news);
+    if (!news) {
+      console.log('No news data found, returning empty string');
+      return '';
+    }
 
     const newsItems = news.items.map(item => `
       <div class="news-item" data-date="${item.date}">
@@ -184,7 +193,11 @@ class ContentLoader {
 
   renderPosts() {
     const posts = this.config?.posts;
-    if (!posts) return '';
+    console.log('renderPosts called, posts data:', posts);
+    if (!posts) {
+      console.log('No posts data found, returning empty string');
+      return '';
+    }
 
     const postItems = posts.items.map(post => `
       <div class="publication-item">
