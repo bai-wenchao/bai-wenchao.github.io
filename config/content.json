@@ -3,6 +3,12 @@
     "title": "Recent News",
     "items": [
       {
+        "date": "2025-11-08",
+        "date_display": "Nov. 8, 2025",
+        "title": "AAAI-26 Paper Accepted",
+        "content": "Paper \"Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game\" accepted by AAAI-26 for oral presentation (17.6% acceptance rate). Congratulations to Zhendong!"
+      },
+      {
         "date": "2025-10-16",
         "date_display": "Oct. 16, 2025",
         "title": "National Scholarship Awarded",
