@@ -34,9 +34,9 @@
           "items": [
             {
               "name": "Writing Perfect Papers",
-              "description": "By Prof. Baochun Li",
-              "url": "assets/files/awesome/howto/writing/writing-perfect-papers-2021.pdf",
-              "icon": "fas fa-file-pdf"
+              "description": "By Prof. Baochun Li - Large file, use external link",
+              "url": "https://www.cs.toronto.edu/~bli/teaching/writing-perfect-papers-2021.pdf",
+              "icon": "fas fa-external-link-alt"
             },
             {
               "name": "Writing for Computer Science",
@@ -93,9 +93,9 @@
             },
             {
               "name": "The Art of Presentation",
-              "description": "By Prof. Baochun Li",
-              "url": "assets/files/awesome/howto/presentation/the-art-of-presentation.pdf",
-              "icon": "fas fa-file-pdf"
+              "description": "By Prof. Baochun Li - Large file, use external link",
+              "url": "https://www.cs.toronto.edu/~bli/teaching/the-art-of-presentation.pdf",
+              "icon": "fas fa-external-link-alt"
             }
           ]
         },
