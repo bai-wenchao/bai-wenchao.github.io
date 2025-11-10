@@ -6,14 +6,41 @@ class ContentLoader {
 
   async loadConfig() {
     try {
+      // Load configs with cache-busting for better performance
+      const cacheBuster = Date.now();
+
       // Load the site configuration to get the list of configs
-      const siteResponse = await fetch('/config/site.json');
+      const siteResponse = await fetch(`/config/site.json?v=${cacheBuster}`, {
+        cache: 'no-cache'
+      });
       const siteConfig = await siteResponse.json();
 
-      // Load all content configs in parallel
-      const configPromises = siteConfig.configs.map(async (configPath) => {
+      // Prioritize critical configs for faster initial render
+      const criticalConfigs = ['config/profile.json'];
+      const secondaryConfigs = siteConfig.configs.filter(config =>
+        !criticalConfigs.includes(config)
+      );
+
+      // Load critical configs first
+      const criticalPromises = criticalConfigs.map(async (configPath) => {
         try {
-          const response = await fetch(`/${configPath}`);
+          const response = await fetch(`/${configPath}?v=${cacheBuster}`, {
+            cache: 'no-cache'
+          });
+          const configData = await response.json();
+          return configData;
+        } catch (error) {
+          console.error(`Error loading critical config ${configPath}:`, error);
+          return {};
+        }
+      });
+
+      // Load secondary configs with lower priority
+      const secondaryPromises = secondaryConfigs.map(async (configPath) => {
+        try {
+          const response = await fetch(`/${configPath}?v=${cacheBuster}`, {
+            cache: 'no-cache'
+          });
           const configData = await response.json();
           return configData;
         } catch (error) {
@@ -22,16 +49,15 @@ class ContentLoader {
         }
       });
 
-      const configs = await Promise.all(configPromises);
+      // Wait for critical configs first
+      const criticalConfigsData = await Promise.all(criticalPromises);
 
-      // Merge all configs with proper structure
-      this.config = configs.reduce((merged, config) => {
-        // Special handling for news and posts configs
-        if (config.title === "Recent News" && config.items) {
-          return { ...merged, news: config };
-        } else if (config.title === "Latest Posts" && config.items) {
-          return { ...merged, posts: config };
-        } else if (config.title === "Awesome Resources" && config.categories) {
+      // Start secondary config loading in background
+      const secondaryConfigsData = Promise.all(secondaryPromises);
+
+      // Merge critical configs immediately
+      this.config = criticalConfigsData.reduce((merged, config) => {
+        if (config.title === "Awesome Resources" && config.categories) {
           return { ...merged, awesome: config };
         } else {
           return { ...merged, ...config };
@@ -39,6 +65,19 @@ class ContentLoader {
       }, {});
 
       this.isLoaded = true;
+
+      // Merge secondary configs when they're ready
+      secondaryConfigsData.then(configs => {
+        configs.forEach(config => {
+          if (config.title === "Recent News" && config.items) {
+            this.config.news = config;
+          } else if (config.title === "Latest Posts" && config.items) {
+            this.config.posts = config;
+          } else {
+            this.config = { ...this.config, ...config };
+          }
+        });
+      });
 
     } catch (error) {
       console.error('Error loading site configuration:', error);
@@ -326,30 +365,78 @@ class ContentLoader {
             </div>
           </div>
         </div>
-        <div class="clustrmaps-container">
-          <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=Kpl7cD5NrwlEv9oVnKbHEYyn6TJ3gYDgS1-uoXs9qzM&cl=ffffff&w=a"></script>
+        <div class="clustrmaps-container" id="clustrmaps-container">
+          <!-- ClustrMaps will be loaded asynchronously -->
         </div>
       </section>
     `;
   }
 
   async renderAll() {
-    await this.loadConfig();
-
-    if (!this.isLoaded || Object.keys(this.config).length === 0) {
-      console.error('Failed to load content configuration');
-      return `
-        <div style="text-align: center; padding: 100px 20px; color: #666;">
-          <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px; color: #ff9800;"></i>
-          <h3>Unable to Load Content</h3>
-          <p>Please check your internet connection and try refreshing the page.</p>
+    // Show immediate loading indicator
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+      mainContent.innerHTML = `
+        <div style="text-align: center; padding: 50px 20px; color: #666;">
+          <i class="fas fa-spinner fa-spin" style="font-size: 2rem; margin-bottom: 20px;"></i>
+          <p>Loading content...</p>
         </div>
       `;
     }
 
+    // Start loading configs immediately but with a timeout
+    const loadPromise = this.loadConfig();
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Loading timeout')), 5000)
+    );
+
+    try {
+      await Promise.race([loadPromise, timeoutPromise]);
+
+      if (!this.isLoaded || Object.keys(this.config).length === 0) {
+        console.error('Failed to load content configuration');
+        return this.renderErrorState();
+      }
+
+      // Render content progressively
+      return this.renderProgressiveContent();
+
+    } catch (error) {
+      console.error('Content loading error:', error);
+      return this.renderErrorState();
+    }
+  }
+
+  renderErrorState() {
     return `
+      <div style="text-align: center; padding: 100px 20px; color: #666;">
+        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 20px; color: #ff9800;"></i>
+        <h3>Unable to Load Content</h3>
+        <p>Please check your internet connection and try refreshing the page.</p>
+      </div>
+    `;
+  }
+
+  renderProgressiveContent() {
+    // Render critical sections first
+    const criticalContent = `
       ${this.renderHero()}
       ${this.renderAbout()}
+    `;
+
+    // Render less critical sections after a delay
+    setTimeout(() => {
+      this.renderSecondaryContent();
+    }, 100);
+
+    return criticalContent;
+  }
+
+  renderSecondaryContent() {
+    const mainContent = document.querySelector('.main-content');
+    if (!mainContent) return;
+
+    const secondaryContent = `
       ${this.renderNews()}
       ${this.renderResearch()}
       ${this.renderPublications()}
@@ -358,6 +445,39 @@ class ContentLoader {
       ${this.renderAwesome()}
       ${this.renderContact()}
     `;
+
+    // Append secondary content to existing content
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = secondaryContent;
+
+    while (tempDiv.firstChild) {
+      mainContent.appendChild(tempDiv.firstChild);
+    }
+
+    // Re-initialize any JavaScript functionality
+    if (typeof initializeNewsSection === 'function') {
+      initializeNewsSection();
+    }
+    if (typeof initializeAbstractFolding === 'function') {
+      initializeAbstractFolding();
+    }
+
+    // Load ClustrMaps asynchronously after all content is rendered
+    this.loadClustrMaps();
+  }
+
+  loadClustrMaps() {
+    // Load ClustrMaps after a delay to avoid blocking the main thread
+    setTimeout(() => {
+      const clustrmapsContainer = document.getElementById('clustrmaps-container');
+      if (clustrmapsContainer) {
+        const script = document.createElement('script');
+        script.id = 'clustrmaps';
+        script.src = '//clustrmaps.com/map_v2.js?d=Kpl7cD5NrwlEv9oVnKbHEYyn6TJ3gYDgS1-uoXs9qzM&cl=ffffff&w=a';
+        script.async = true;
+        clustrmapsContainer.appendChild(script);
+      }
+    }, 2000); // Load after 2 seconds
   }
 }
 
