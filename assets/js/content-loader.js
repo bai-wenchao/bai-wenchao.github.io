@@ -31,10 +31,14 @@ class ContentLoader {
           return { ...merged, news: config };
         } else if (config.title === "Latest Posts" && config.items) {
           return { ...merged, posts: config };
+        } else if (config.title === "Awesome Resources" && config.categories) {
+          return { ...merged, awesome: config };
         } else {
           return { ...merged, ...config };
         }
       }, {});
+
+      console.log('Loaded config:', this.config);
 
       this.isLoaded = true;
 
@@ -252,7 +256,11 @@ class ContentLoader {
 
   renderAwesome() {
     const awesome = this.config?.awesome;
-    if (!awesome) return '';
+    console.log('renderAwesome called, awesome config:', awesome);
+    if (!awesome) {
+      console.log('No awesome config found');
+      return '';
+    }
 
     const categories = awesome.categories.map(category => `
       <div class="awesome-category">
