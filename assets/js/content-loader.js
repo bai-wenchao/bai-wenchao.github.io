@@ -77,6 +77,9 @@ class ContentLoader {
             this.config = { ...this.config, ...config };
           }
         });
+        console.log('Secondary configs merged:', this.config);
+      }).catch(error => {
+        console.error('Error loading secondary configs:', error);
       });
 
     } catch (error) {
@@ -293,7 +296,12 @@ class ContentLoader {
 
   renderAwesome() {
     const awesome = this.config?.awesome;
-    if (!awesome) return '';
+    console.log('renderAwesome called, awesome config:', awesome);
+    console.log('Full config object keys:', Object.keys(this.config));
+    if (!awesome) {
+      console.log('No awesome config found, returning empty string');
+      return '';
+    }
 
     const categories = awesome.categories.map(category => `
       <div class="awesome-category">
@@ -424,17 +432,20 @@ class ContentLoader {
       ${this.renderAbout()}
     `;
 
-    // Render less critical sections after a delay
-    setTimeout(() => {
-      this.renderSecondaryContent();
-    }, 100);
+    // Render less critical sections after a delay to allow async config loading
+    setTimeout(async () => {
+      await this.renderSecondaryContent();
+    }, 500); // Increased delay to ensure secondary configs are loaded
 
     return criticalContent;
   }
 
-  renderSecondaryContent() {
+  async renderSecondaryContent() {
     const mainContent = document.querySelector('.main-content');
     if (!mainContent) return;
+
+    // Wait a bit for secondary configs to be loaded
+    await new Promise(resolve => setTimeout(resolve, 300));
 
     const secondaryContent = `
       ${this.renderNews()}
