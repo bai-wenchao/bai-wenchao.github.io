@@ -34,7 +34,7 @@
           "items": [
             {
               "name": "Writing Perfect Papers",
-              "description": "By Prof. Baochun Li - Large file, use external link",
+              "description": "By Prof. Baochun Li",
               "url": "https://www.cs.toronto.edu/~bli/teaching/writing-perfect-papers-2021.pdf",
               "icon": "fas fa-external-link-alt"
             },
@@ -93,8 +93,8 @@
             },
             {
               "name": "The Art of Presentation",
-              "description": "By Prof. Baochun Li - Large file, use external link",
-              "url": "https://www.cs.toronto.edu/~bli/teaching/the-art-of-presentation.pdf",
+              "description": "By Prof. Baochun Li",
+              "url": "https://www.cs.cityu.edu.hk/~jia/research/the-art-of-presentation.pdf",
               "icon": "fas fa-external-link-alt"
             }
           ]
