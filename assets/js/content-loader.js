@@ -250,6 +250,43 @@ class ContentLoader {
     `;
   }
 
+  renderAwesome() {
+    const awesome = this.config?.awesome;
+    if (!awesome) return '';
+
+    const categories = awesome.categories.map(category => `
+      <div class="awesome-category">
+        <h3>${category.title}</h3>
+        <p class="category-description">${category.description}</p>
+        <div class="awesome-grid">
+          ${category.items.map(item => `
+            <div class="awesome-item">
+              <div class="awesome-icon">
+                <i class="${item.icon}"></i>
+              </div>
+              <div class="awesome-content">
+                <h4><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.name}</a></h4>
+                <p>${item.description}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    return `
+      <section id="awesome" class="section section-alt">
+        <div class="container">
+          <h2 class="section-title">${awesome.title}</h2>
+          <p class="section-description">${awesome.description}</p>
+          <div class="awesome-categories">
+            ${categories}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
   renderContact() {
     const contact = this.config?.contact;
     if (!contact) return '';
@@ -316,6 +353,7 @@ class ContentLoader {
       ${this.renderPublications()}
       ${this.renderPosts()}
       ${this.renderCV()}
+      ${this.renderAwesome()}
       ${this.renderContact()}
     `;
   }

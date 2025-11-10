@@ -1,0 +1,78 @@
+{
+  "title": "Awesome Resources",
+  "description": "A curated collection of useful tools, resources, and references",
+  "categories": [
+    {
+      "title": "Development Tools",
+      "description": "Essential tools for software development and programming",
+      "items": [
+        {
+          "name": "GitHub",
+          "description": "Version control and collaboration platform for code development",
+          "url": "https://github.com",
+          "icon": "fab fa-github"
+        },
+        {
+          "name": "Stack Overflow",
+          "description": "Community-driven Q&A platform for programmers",
+          "url": "https://stackoverflow.com",
+          "icon": "fab fa-stack-overflow"
+        },
+        {
+          "name": "VS Code",
+          "description": "Free source-code editor made by Microsoft",
+          "url": "https://code.visualstudio.com",
+          "icon": "fas fa-code"
+        }
+      ]
+    },
+    {
+      "title": "Learning Resources",
+      "description": "Platforms and materials for continuous learning",
+      "items": [
+        {
+          "name": "Coursera",
+          "description": "Online courses from top universities and companies",
+          "url": "https://www.coursera.org",
+          "icon": "fas fa-graduation-cap"
+        },
+        {
+          "name": "arXiv",
+          "description": "Open access repository for scientific papers",
+          "url": "https://arxiv.org",
+          "icon": "fas fa-file-alt"
+        },
+        {
+          "name": "MIT OpenCourseWare",
+          "description": "Free access to MIT course materials",
+          "url": "https://ocw.mit.edu",
+          "icon": "fas fa-university"
+        }
+      ]
+    },
+    {
+      "title": "Research Tools",
+      "description": "Tools and platforms for academic research",
+      "items": [
+        {
+          "name": "Google Scholar",
+          "description": "Scholarly literature search across many disciplines",
+          "url": "https://scholar.google.com",
+          "icon": "fas fa-search"
+        },
+        {
+          "name": "Connected Papers",
+          "description": "Visual tool for finding and exploring papers relevant to your field",
+          "url": "https://www.connectedpapers.com",
+          "icon": "fas fa-project-diagram"
+        },
+        {
+          "name": "Zotero",
+          "description": "Free reference management software",
+          "url": "https://www.zotero.org",
+          "icon": "fas fa-bookmark"
+        }
+      ]
+    }
+  ]
+}

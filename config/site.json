@@ -3,6 +3,7 @@
     "config/profile.json",
     "config/research.json",
     "config/news.json",
-    "config/posts.json"
+    "config/posts.json",
+    "config/awesome.json"
   ]
 }
