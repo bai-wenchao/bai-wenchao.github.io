@@ -24,7 +24,7 @@
             {
               "name": "Efficient Reading of Papers in Science and Technology",
               "description": "By Michael J. Hanson and Dylan J. McNamee",
-              "url": "#",
+              "url": "assets/files/awesome/howto/reading/efficient_reading_of_papers_in_science_and_technology.pdf",
               "icon": "fas fa-file-alt"
             }
           ]
@@ -41,8 +41,8 @@
             {
               "name": "Writing for Computer Science",
               "description": "By Prof. Justin Zobel",
-              "url": "assets/files/awesome/howto/writing/writing_for_computer_science.pdf",
-              "icon": "fas fa-file-pdf"
+              "url": "https://link.springer.com/book/10.1007/978-1-4471-6639-9",
+              "icon": "fas fa-external-link-alt"
             },
             {
               "name": "10 tips on how we write papers",
