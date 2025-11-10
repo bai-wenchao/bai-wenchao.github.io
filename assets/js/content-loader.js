@@ -38,8 +38,6 @@ class ContentLoader {
         }
       }, {});
 
-      console.log('Loaded config:', this.config);
-
       this.isLoaded = true;
 
     } catch (error) {
@@ -256,11 +254,7 @@ class ContentLoader {
 
   renderAwesome() {
     const awesome = this.config?.awesome;
-    console.log('renderAwesome called, awesome config:', awesome);
-    if (!awesome) {
-      console.log('No awesome config found');
-      return '';
-    }
+    if (!awesome) return '';
 
     const categories = awesome.categories.map(category => `
       <div class="awesome-category">
