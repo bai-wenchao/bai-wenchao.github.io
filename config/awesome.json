@@ -3,74 +3,169 @@
   "description": "A curated collection of useful tools, resources, and references",
   "categories": [
     {
-      "title": "Development Tools",
-      "description": "Essential tools for software development and programming",
+      "title": "HowTo",
+      "description": "Essential guides for academic success",
+      "subsections": [
+        {
+          "title": "How to Read Papers",
+          "items": [
+            {
+              "name": "How to Read a Paper",
+              "description": "By Prof. Srinivasan Keshav",
+              "url": "assets/files/awesome/howto/reading/HowtoReadPaper.pdf",
+              "icon": "fas fa-file-pdf"
+            },
+            {
+              "name": "10 tips for academic talks",
+              "description": "By Prof. Matt Might",
+              "url": "https://matt.might.net/articles/academic-presentation-tips/",
+              "icon": "fas fa-presentation"
+            },
+            {
+              "name": "Efficient Reading of Papers in Science and Technology",
+              "description": "By Michael J. Hanson and Dylan J. McNamee",
+              "url": "#",
+              "icon": "fas fa-file-alt"
+            }
+          ]
+        },
+        {
+          "title": "How to Write Perfect Papers",
+          "items": [
+            {
+              "name": "Writing Perfect Papers",
+              "description": "By Prof. Baochun Li",
+              "url": "assets/files/awesome/howto/writing/writing-perfect-papers-2021.pdf",
+              "icon": "fas fa-file-pdf"
+            },
+            {
+              "name": "Writing for Computer Science",
+              "description": "By Prof. Justin Zobel",
+              "url": "assets/files/awesome/howto/writing/writing_for_computer_science.pdf",
+              "icon": "fas fa-file-pdf"
+            },
+            {
+              "name": "10 tips on how we write papers",
+              "description": "By Prof. Edward H. Sargent",
+              "url": "assets/files/awesome/howto/writing/10_tips_on_how_we_write_papers.pdf",
+              "icon": "fas fa-file-pdf"
+            },
+            {
+              "name": "Mathematical Writing",
+              "description": "By Prof. Donald E. Knuth, Prof. Tracy Larrabee, and Prof. Paul M. Roberts",
+              "url": "assets/files/awesome/howto/writing/mathwriting.pdf",
+              "icon": "fas fa-file-pdf"
+            },
+            {
+              "name": "How (and How Not) to Write a Good Systems Paper",
+              "description": "By Roy Levin and David D. Redell",
+              "url": "https://www.usenix.org/legacy/publications/library/proceedings/dsl97/good_paper.html",
+              "icon": "fas fa-file-alt"
+            },
+            {
+              "name": "The Science of Scientific Writing",
+              "description": "By George D. Gopen and Judith A. Swan",
+              "url": "assets/files/awesome/howto/writing/The_Science_of_Scientific_Writing.pdf",
+              "icon": "fas fa-file-pdf"
+            },
+            {
+              "name": "How to write a technical paper or a research paper",
+              "description": "By Michael Ernst",
+              "url": "https://homes.cs.washington.edu/~mernst/advice/write-technical-paper.html",
+              "icon": "fas fa-file-alt"
+            },
+            {
+              "name": "3 shell scripts to improve your writing",
+              "description": "By Prof. Matt Might - \"My Ph.D. advisor rewrote himself in bash.\"",
+              "url": "https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/",
+              "icon": "fas fa-code"
+            }
+          ]
+        },
+        {
+          "title": "How to Present",
+          "items": [
+            {
+              "name": "How To Speak",
+              "description": "By Prof. Patrick Winston",
+              "url": "https://www.youtube.com/watch?v=Unzc731iCUY",
+              "icon": "fas fa-video"
+            },
+            {
+              "name": "The Art of Presentation",
+              "description": "By Prof. Baochun Li",
+              "url": "assets/files/awesome/howto/presentation/the-art-of-presentation.pdf",
+              "icon": "fas fa-file-pdf"
+            }
+          ]
+        },
+        {
+          "title": "How to Peer Review",
+          "items": [
+            {
+              "name": "How to Peer Review",
+              "description": "By Prof. Matt Might",
+              "url": "https://matt.might.net/articles/how-to-peer-review/",
+              "icon": "fas fa-file-alt"
+            }
+          ]
+        },
+        {
+          "title": "How to Respond to Peer Reviews",
+          "items": [
+            {
+              "name": "Peer Review Rebuttals",
+              "description": "By Prof. Matt Might",
+              "url": "https://matt.might.net/articles/peer-review-rebuttals/",
+              "icon": "fas fa-file-alt"
+            }
+          ]
+        },
+        {
+          "title": "How to Send and Reply to Email",
+          "items": [
+            {
+              "name": "How to Email",
+              "description": "By Prof. Matt Might",
+              "url": "https://matt.might.net/articles/how-to-email/",
+              "icon": "fas fa-envelope"
+            }
+          ]
+        },
+        {
+          "title": "How to Ask Questions Smartly",
+          "items": [
+            {
+              "name": "How To Ask Questions The Smart Way",
+              "description": "By Eric Steven Raymond",
+              "url": "http://www.catb.org/~esr/faqs/smart-questions.html",
+              "icon": "fas fa-question-circle"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Misc",
+      "description": "Miscellaneous useful resources",
       "items": [
         {
-          "name": "GitHub",
-          "description": "Version control and collaboration platform for code development",
-          "url": "https://github.com",
+          "name": "GitHub Awesome List",
+          "description": "Curated lists of awesome projects and resources",
+          "url": "https://github.com/topics/awesome",
           "icon": "fab fa-github"
         },
         {
-          "name": "Stack Overflow",
-          "description": "Community-driven Q&A platform for programmers",
-          "url": "https://stackoverflow.com",
-          "icon": "fab fa-stack-overflow"
+          "name": "A Compendium of NP Optimization Problems",
+          "description": "Comprehensive collection of NP-complete optimization problems",
+          "url": "https://www.csc.kth.se/tcs/compendium/",
+          "icon": "fas fa-brain"
         },
         {
-          "name": "VS Code",
-          "description": "Free source-code editor made by Microsoft",
-          "url": "https://code.visualstudio.com",
-          "icon": "fas fa-code"
-        }
-      ]
-    },
-    {
-      "title": "Learning Resources",
-      "description": "Platforms and materials for continuous learning",
-      "items": [
-        {
-          "name": "Coursera",
-          "description": "Online courses from top universities and companies",
-          "url": "https://www.coursera.org",
-          "icon": "fas fa-graduation-cap"
-        },
-        {
-          "name": "arXiv",
-          "description": "Open access repository for scientific papers",
-          "url": "https://arxiv.org",
-          "icon": "fas fa-file-alt"
-        },
-        {
-          "name": "MIT OpenCourseWare",
-          "description": "Free access to MIT course materials",
-          "url": "https://ocw.mit.edu",
-          "icon": "fas fa-university"
-        }
-      ]
-    },
-    {
-      "title": "Research Tools",
-      "description": "Tools and platforms for academic research",
-      "items": [
-        {
-          "name": "Google Scholar",
-          "description": "Scholarly literature search across many disciplines",
-          "url": "https://scholar.google.com",
-          "icon": "fas fa-search"
-        },
-        {
-          "name": "Connected Papers",
-          "description": "Visual tool for finding and exploring papers relevant to your field",
-          "url": "https://www.connectedpapers.com",
-          "icon": "fas fa-project-diagram"
-        },
-        {
-          "name": "Zotero",
-          "description": "Free reference management software",
-          "url": "https://www.zotero.org",
-          "icon": "fas fa-bookmark"
+          "name": "Blogs of Prof. Matt Might",
+          "description": "Excellent articles on computer science, research, and academia",
+          "url": "https://matt.might.net/articles/",
+          "icon": "fas fa-blog"
         }
       ]
     }
