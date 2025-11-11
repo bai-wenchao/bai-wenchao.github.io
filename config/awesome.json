@@ -47,8 +47,8 @@
             {
               "name": "Mathematical Writing",
               "description": "By Prof. Donald E. Knuth, Prof. Tracy Larrabee, and Prof. Paul M. Roberts",
-              "url": "assets/files/awesome/howto/writing/mathwriting.pdf",
-              "icon": "fas fa-file-pdf"
+              "url": "https://jmlr.csail.mit.edu/reviewing-papers/knuth_mathematical_writing.pdf",
+              "icon": "fas fa-external-link-alt"
             },
             {
               "name": "How (and How Not) to Write a Good Systems Paper",
