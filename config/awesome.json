@@ -83,19 +83,19 @@
               "name": "How To Speak",
               "description": "By Prof. Patrick Winston",
               "url": "https://www.youtube.com/watch?v=Unzc731iCUY",
-              "icon": "fas fa-person-chalkboard"
+              "icon": "fa-solid fa-person-chalkboard"
             },
             {
               "name": "The Art of Presentation",
               "description": "By Prof. Baochun Li",
               "url": "https://www.cs.cityu.edu.hk/~jia/research/the-art-of-presentation.pdf",
-              "icon": "fas fa-person-chalkboard"
+              "icon": "fa-solid fa-person-chalkboard"
             },
             {
               "name": "10 Tips for Academic Talks",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/academic-presentation-tips/",
-              "icon": "fas fa-person-chalkboard"
+              "icon": "fa-solid fa-person-chalkboard"
             }
           ]
         },
