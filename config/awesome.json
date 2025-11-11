@@ -54,7 +54,7 @@
               "name": "How (and How Not) to Write a Good Systems Paper",
               "description": "By Roy Levin and David D. Redell",
               "url": "https://www.usenix.org/legacy/publications/library/proceedings/dsl97/good_paper.html",
-              "icon": "fas fa-file-alt"
+              "icon": "fas fa-external-link-alt"
             },
             {
               "name": "The Science of Scientific Writing",
@@ -69,8 +69,8 @@
               "icon": "fas fa-external-link-alt"
             },
             {
-              "name": "3 shell scripts to improve your writing",
-              "description": "By Prof. Matt Might - \"My Ph.D. advisor rewrote himself in bash.\"",
+              "name": "3 shell scripts to improve your writing, or \"My Ph.D. advisor rewrote himself in bash.\"",
+              "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/",
               "icon": "fas fa-code"
             }
@@ -106,7 +106,7 @@
               "name": "How to Peer Review",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/how-to-peer-review/",
-              "icon": "fas fa-file-alt"
+              "icon": "fas fa-external-link-alt"
             }
           ]
         },
@@ -117,7 +117,7 @@
               "name": "Peer Review Rebuttals",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/peer-review-rebuttals/",
-              "icon": "fas fa-file-alt"
+              "icon": "fas fa-external-link-alt"
             }
           ]
         },
@@ -125,7 +125,7 @@
           "title": "How to Send and Reply to Email",
           "items": [
             {
-              "name": "How to Email",
+              "name": "How to Send and Reply Email",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/how-to-email/",
               "icon": "fas fa-envelope"
