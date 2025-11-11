@@ -20,6 +20,8 @@ class ContentLoader {
       const secondaryConfigs = siteConfig.configs.filter(config =>
         !criticalConfigs.includes(config)
       );
+      console.log('Critical configs:', criticalConfigs);
+      console.log('Secondary configs:', secondaryConfigs);
 
       // Load critical configs first
       const criticalPromises = criticalConfigs.map(async (configPath) => {
@@ -54,14 +56,11 @@ class ContentLoader {
 
       // Start secondary config loading in background
       const secondaryConfigsData = Promise.all(secondaryPromises);
+      console.log('Secondary promises created for configs:', secondaryConfigs);
 
       // Merge critical configs immediately
       this.config = criticalConfigsData.reduce((merged, config) => {
-        if (config.title === "Awesome Resources" && config.categories) {
-          return { ...merged, awesome: config };
-        } else {
-          return { ...merged, ...config };
-        }
+        return { ...merged, ...config };
       }, {});
 
       this.isLoaded = true;
