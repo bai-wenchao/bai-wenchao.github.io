@@ -12,7 +12,7 @@
             {
               "name": "How to Read a Paper",
               "description": "By Prof. Srinivasan Keshav",
-              "url": "assets/files/awesome/howto/reading/HowtoReadPaper.pdf",
+              "url": "#",
               "icon": "fas fa-file-pdf"
             },
             {
@@ -24,7 +24,7 @@
             {
               "name": "Efficient Reading of Papers in Science and Technology",
               "description": "By Michael J. Hanson and Dylan J. McNamee",
-              "url": "assets/files/awesome/howto/reading/efficient_reading_of_papers_in_science_and_technology.pdf",
+              "url": "#",
               "icon": "fas fa-file-alt"
             }
           ]
@@ -47,13 +47,13 @@
             {
               "name": "10 tips on how we write papers",
               "description": "By Prof. Edward H. Sargent",
-              "url": "assets/files/awesome/howto/writing/10_tips_on_how_we_write_papers.pdf",
+              "url": "#",
               "icon": "fas fa-file-pdf"
             },
             {
               "name": "Mathematical Writing",
               "description": "By Prof. Donald E. Knuth, Prof. Tracy Larrabee, and Prof. Paul M. Roberts",
-              "url": "assets/files/awesome/howto/writing/mathwriting.pdf",
+              "url": "#",
               "icon": "fas fa-file-pdf"
             },
             {
@@ -65,14 +65,14 @@
             {
               "name": "The Science of Scientific Writing",
               "description": "By George D. Gopen and Judith A. Swan",
-              "url": "assets/files/awesome/howto/writing/The_Science_of_Scientific_Writing.pdf",
+              "url": "#",
               "icon": "fas fa-file-pdf"
             },
             {
               "name": "How to write a technical paper or a research paper",
               "description": "By Michael Ernst",
               "url": "https://homes.cs.washington.edu/~mernst/advice/write-technical-paper.html",
-              "icon": "fas fa-file-alt"
+              "icon": "fas fa-external-link-alt"
             },
             {
               "name": "3 shell scripts to improve your writing",
