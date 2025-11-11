@@ -871,8 +871,8 @@ a:hover {
 
 .clustrmaps-container {
   text-align: center;
-  margin-top: 2rem;
-  padding: 0.5rem 0;
+  margin-top: 4rem;
+  padding: 1.5rem 0;
   border-top: 1px solid #e9ecef;
   opacity: 0.8;
 }
@@ -924,6 +924,7 @@ a:hover {
   }
 
   .clustrmaps-container {
-    margin-top: 1.5rem;
+    margin-top: 3rem;
+    padding: 1rem 0;
   }
 }
