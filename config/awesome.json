@@ -13,13 +13,13 @@
               "name": "How to Read a Paper",
               "description": "By Prof. Srinivasan Keshav",
               "url": "https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-book-reader"
             },
             {
               "name": "Efficient Reading of Papers in Science and Technology",
               "description": "By Michael J. Hanson and Dylan J. McNamee",
               "url": "https://www.cs.columbia.edu/~hgs/netbib/efficientReading.pdf",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-book-reader"
             }
           ]
         },
@@ -30,49 +30,49 @@
               "name": "Writing Perfect Papers",
               "description": "By Prof. Baochun Li",
               "url": "https://iqua.ece.toronto.edu/papers/writing-perfect-papers-2021.pdf",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-pen-fancy"
             },
             {
               "name": "Writing for Computer Science",
               "description": "By Prof. Justin Zobel",
               "url": "https://link.springer.com/book/10.1007/978-1-4471-6639-9",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-pen-fancy"
             },
             {
               "name": "10 tips on how we write papers",
               "description": "By Prof. Edward H. Sargent",
               "url": "https://www.cell.com/matter/fulltext/S2590-2385(22)00543-4",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-pen-fancy"
             },
             {
               "name": "Mathematical Writing",
               "description": "By Prof. Donald E. Knuth, Prof. Tracy Larrabee, and Prof. Paul M. Roberts",
               "url": "https://jmlr.csail.mit.edu/reviewing-papers/knuth_mathematical_writing.pdf",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-pen-fancy"
             },
             {
               "name": "How (and How Not) to Write a Good Systems Paper",
               "description": "By Roy Levin and David D. Redell",
               "url": "https://www.usenix.org/legacy/publications/library/proceedings/dsl97/good_paper.html",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-pen-fancy"
             },
             {
               "name": "The Science of Scientific Writing",
               "description": "By George D. Gopen and Judith A. Swan",
               "url": "https://www.usenix.org/sites/default/files/gopen_and_swan_science_of_scientific_writing.pdf",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-microscope"
             },
             {
               "name": "How to Write a Technical Paper or a Research Paper",
               "description": "By Michael Ernst",
               "url": "https://homes.cs.washington.edu/~mernst/advice/write-technical-paper.html",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-pen-fancy"
             },
             {
               "name": "3 Shell Scripts to Improve Your Writing, or \"My Ph.D. Advisor Rewrote Himself in Bash.\"",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/",
-              "icon": "fas fa-code"
+              "icon": "fas fa-terminal"
             }
           ]
         },
@@ -83,19 +83,19 @@
               "name": "How To Speak",
               "description": "By Prof. Patrick Winston",
               "url": "https://www.youtube.com/watch?v=Unzc731iCUY",
-              "icon": "fas fa-video"
+              "icon": "fas fa-presentation"
             },
             {
               "name": "The Art of Presentation",
               "description": "By Prof. Baochun Li",
               "url": "https://www.cs.cityu.edu.hk/~jia/research/the-art-of-presentation.pdf",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-presentation"
             },
             {
               "name": "10 Tips for Academic Talks",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/academic-presentation-tips/",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-presentation"
             }
           ]
         },
@@ -106,13 +106,13 @@
               "name": "How to Peer Review",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/how-to-peer-review/",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-comments"
             },
             {
               "name": "Responding to Peer Review",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/peer-review-rebuttals/",
-              "icon": "fas fa-external-link-alt"
+              "icon": "fas fa-reply"
             }
           ]
         },
