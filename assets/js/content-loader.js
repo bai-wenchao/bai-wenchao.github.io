@@ -54,42 +54,39 @@ class ContentLoader {
       // Wait for critical configs first
       const criticalConfigsData = await Promise.all(criticalPromises);
 
-      // Start secondary config loading in background
-      const secondaryConfigsData = Promise.all(secondaryPromises);
-      console.log('Secondary promises created for configs:', secondaryConfigs);
+      // Start secondary config loading
+      console.log('Loading secondary configs...');
+      const secondaryConfigsData = await Promise.all(secondaryPromises);
+      console.log('Secondary configs loaded:', secondaryConfigsData);
 
       // Merge critical configs immediately
       this.config = criticalConfigsData.reduce((merged, config) => {
         return { ...merged, ...config };
       }, {});
 
-      this.isLoaded = true;
-
-      // Merge secondary configs when they're ready
-      secondaryConfigsData.then(configs => {
-        console.log('Processing secondary configs:', configs);
-        configs.forEach(config => {
-          console.log('Processing config:', config.title, 'has categories:', !!config.categories);
-          if (config.title === "Recent News" && config.items) {
-            this.config.news = config;
-            console.log('News config merged');
-          } else if (config.title === "Latest Posts" && config.items) {
-            this.config.posts = config;
-            console.log('Posts config merged');
-          } else if (config.title === "Awesome Resources" && config.categories) {
-            this.config.awesome = config;
-            console.log('Awesome config merged:', config);
-          } else {
-            console.log('Merging generic config:', config.title);
-            this.config = { ...this.config, ...config };
-          }
-        });
-        console.log('Final config keys:', Object.keys(this.config));
-        console.log('Has awesome key:', 'awesome' in this.config);
-        console.log('Secondary configs merged:', this.config);
-      }).catch(error => {
-        console.error('Error loading secondary configs:', error);
+      // Merge secondary configs now (synchronous)
+      secondaryConfigsData.forEach(config => {
+        console.log('Processing config:', config.title, 'has categories:', !!config.categories);
+        if (config.title === "Recent News" && config.items) {
+          this.config.news = config;
+          console.log('News config merged');
+        } else if (config.title === "Latest Posts" && config.items) {
+          this.config.posts = config;
+          console.log('Posts config merged');
+        } else if (config.title === "Awesome Resources" && config.categories) {
+          this.config.awesome = config;
+          console.log('Awesome config merged:', config);
+        } else {
+          console.log('Merging generic config:', config.title);
+          this.config = { ...this.config, ...config };
+        }
       });
+
+      console.log('Final config keys:', Object.keys(this.config));
+      console.log('Has awesome key:', 'awesome' in this.config);
+      console.log('Secondary configs merged:', this.config);
+
+      this.isLoaded = true;
 
     } catch (error) {
       console.error('Error loading site configuration:', error);
