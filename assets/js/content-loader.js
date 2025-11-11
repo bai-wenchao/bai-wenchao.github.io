@@ -473,8 +473,8 @@ class ContentLoader {
       ${this.renderResearch()}
       ${this.renderPublications()}
       ${this.renderPosts()}
-      ${this.renderCV()}
       ${this.renderAwesome()}
+      ${this.renderCV()}
       ${this.renderContact()}
     `;
 
