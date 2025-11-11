@@ -778,6 +778,25 @@ a:hover {
   font-style: italic;
 }
 
+.awesome-subsections {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.awesome-subsection {
+  margin-top: 1.5rem;
+}
+
+.awesome-subsection h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0066cc;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
 .awesome-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -824,13 +843,21 @@ a:hover {
   margin-bottom: 0.5rem;
 }
 
-.awesome-content h4 a {
+.awesome-content h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.awesome-content h4 a,
+.awesome-content h5 a {
   color: #0066cc;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.awesome-content h4 a:hover {
+.awesome-content h4 a:hover,
+.awesome-content h5 a:hover {
   color: #004499;
   text-decoration: underline;
 }
@@ -846,6 +873,19 @@ a:hover {
 @media (max-width: 768px) {
   .awesome-category {
     padding: 1.5rem;
+  }
+
+  .awesome-subsections {
+    gap: 2rem;
+  }
+
+  .awesome-subsection {
+    margin-top: 1rem;
+  }
+
+  .awesome-subsection h4 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
   }
 
   .awesome-grid {
@@ -865,6 +905,10 @@ a:hover {
 
   .awesome-content h4 {
     font-size: 1rem;
+  }
+
+  .awesome-content h5 {
+    font-size: 0.95rem;
   }
 
   .awesome-content p {

@@ -20,8 +20,6 @@ class ContentLoader {
       const secondaryConfigs = siteConfig.configs.filter(config =>
         !criticalConfigs.includes(config)
       );
-      console.log('Critical configs:', criticalConfigs);
-      console.log('Secondary configs:', secondaryConfigs);
 
       // Load critical configs first
       const criticalPromises = criticalConfigs.map(async (configPath) => {
@@ -55,9 +53,7 @@ class ContentLoader {
       const criticalConfigsData = await Promise.all(criticalPromises);
 
       // Start secondary config loading
-      console.log('Loading secondary configs...');
       const secondaryConfigsData = await Promise.all(secondaryPromises);
-      console.log('Secondary configs loaded:', secondaryConfigsData);
 
       // Merge critical configs immediately
       this.config = criticalConfigsData.reduce((merged, config) => {
@@ -66,25 +62,16 @@ class ContentLoader {
 
       // Merge secondary configs now (synchronous)
       secondaryConfigsData.forEach(config => {
-        console.log('Processing config:', config.title, 'has categories:', !!config.categories);
         if (config.title === "Recent News" && config.items) {
           this.config.news = config;
-          console.log('News config merged');
         } else if (config.title === "Latest Posts" && config.items) {
           this.config.posts = config;
-          console.log('Posts config merged');
         } else if (config.title === "Awesome Resources" && config.categories) {
           this.config.awesome = config;
-          console.log('Awesome config merged:', config);
         } else {
-          console.log('Merging generic config:', config.title);
           this.config = { ...this.config, ...config };
         }
       });
-
-      console.log('Final config keys:', Object.keys(this.config));
-      console.log('Has awesome key:', 'awesome' in this.config);
-      console.log('Secondary configs merged:', this.config);
 
       this.isLoaded = true;
 
@@ -302,12 +289,7 @@ class ContentLoader {
 
   renderAwesome() {
     const awesome = this.config?.awesome;
-    console.log('renderAwesome called, awesome config:', awesome);
-    console.log('Full config object keys:', Object.keys(this.config));
-    if (!awesome) {
-      console.log('No awesome config found, returning empty string');
-      return '';
-    }
+    if (!awesome) return '';
 
     const categories = awesome.categories.map(category => {
       if (category.subsections) {
@@ -484,8 +466,7 @@ class ContentLoader {
     if (!mainContent) return;
 
     // Wait a bit for secondary configs to be loaded
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('About to render awesome, config.awesome:', this.config?.awesome);
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     const secondaryContent = `
       ${this.renderNews()}
