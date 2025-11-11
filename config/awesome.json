@@ -117,24 +117,19 @@
           ]
         },
         {
-          "title": "How to Send and Reply to Email",
-          "items": [
-            {
-              "name": "How to Send and Reply Email",
-              "description": "By Prof. Matt Might",
-              "url": "https://matt.might.net/articles/how-to-email/",
-              "icon": "fas fa-envelope"
-            }
-          ]
-        },
-        {
-          "title": "How to Ask Questions Smartly",
+          "title": "How to Ask",
           "items": [
             {
               "name": "How To Ask Questions The Smart Way",
               "description": "By Eric Steven Raymond",
               "url": "http://www.catb.org/~esr/faqs/smart-questions.html",
               "icon": "fas fa-question-circle"
+            },
+            {
+              "name": "How to Send and Reply Email",
+              "description": "By Prof. Matt Might",
+              "url": "https://matt.might.net/articles/how-to-email/",
+              "icon": "fas fa-envelope"
             }
           ]
         }
