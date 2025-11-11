@@ -73,6 +73,9 @@ class ContentLoader {
             this.config.news = config;
           } else if (config.title === "Latest Posts" && config.items) {
             this.config.posts = config;
+          } else if (config.title === "Awesome Resources" && config.categories) {
+            this.config.awesome = config;
+            console.log('Awesome config merged:', config);
           } else {
             this.config = { ...this.config, ...config };
           }
@@ -193,7 +196,7 @@ class ContentLoader {
     const publications = this.config?.publications;
     if (!publications) return '';
 
-    const pubItems = publications.items.map((pub, index) => `
+    const pubItems = publications.items.map((pub) => `
       <div class="publication-item">
         <div class="publication-content">
           <p class="publication-authors">
@@ -303,25 +306,58 @@ class ContentLoader {
       return '';
     }
 
-    const categories = awesome.categories.map(category => `
-      <div class="awesome-category">
-        <h3>${category.title}</h3>
-        <p class="category-description">${category.description}</p>
-        <div class="awesome-grid">
-          ${category.items.map(item => `
-            <div class="awesome-item">
-              <div class="awesome-icon">
-                <i class="${item.icon}"></i>
-              </div>
-              <div class="awesome-content">
-                <h4><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.name}</a></h4>
-                <p>${item.description}</p>
-              </div>
+    const categories = awesome.categories.map(category => {
+      if (category.subsections) {
+        // Handle categories with subsections (like "HowTo")
+        return `
+          <div class="awesome-category">
+            <h3>${category.title}</h3>
+            <p class="category-description">${category.description}</p>
+            <div class="awesome-subsections">
+              ${category.subsections.map(subsection => `
+                <div class="awesome-subsection">
+                  <h4>${subsection.title}</h4>
+                  <div class="awesome-grid">
+                    ${subsection.items.map(item => `
+                      <div class="awesome-item">
+                        <div class="awesome-icon">
+                          <i class="${item.icon}"></i>
+                        </div>
+                        <div class="awesome-content">
+                          <h5><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.name}</a></h5>
+                          <p>${item.description}</p>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
             </div>
-          `).join('')}
-        </div>
-      </div>
-    `).join('');
+          </div>
+        `;
+      } else {
+        // Handle regular categories with direct items (like "Misc")
+        return `
+          <div class="awesome-category">
+            <h3>${category.title}</h3>
+            <p class="category-description">${category.description}</p>
+            <div class="awesome-grid">
+              ${category.items.map(item => `
+                <div class="awesome-item">
+                  <div class="awesome-icon">
+                    <i class="${item.icon}"></i>
+                  </div>
+                  <div class="awesome-content">
+                    <h4><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.name}</a></h4>
+                    <p>${item.description}</p>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+    }).join('');
 
     return `
       <section id="awesome" class="section section-alt">
