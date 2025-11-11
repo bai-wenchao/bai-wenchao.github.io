@@ -63,13 +63,13 @@
               "icon": "fas fa-external-link-alt"
             },
             {
-              "name": "How to write a technical paper or a research paper",
+              "name": "How to Write a Technical Paper or a Research Paper",
               "description": "By Michael Ernst",
               "url": "https://homes.cs.washington.edu/~mernst/advice/write-technical-paper.html",
               "icon": "fas fa-external-link-alt"
             },
             {
-              "name": "3 shell scripts to improve your writing, or \"My Ph.D. advisor rewrote himself in bash.\"",
+              "name": "3 Shell Scripts to Improve Your Writing, or \"My Ph.D. Advisor Rewrote Himself in Bash.\"",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/shell-scripts-for-passive-voice-weasel-words-duplicates/",
               "icon": "fas fa-code"
@@ -92,7 +92,7 @@
               "icon": "fas fa-external-link-alt"
             },
             {
-              "name": "10 tips for academic talks",
+              "name": "10 Tips for Academic Talks",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/academic-presentation-tips/",
               "icon": "fas fa-external-link-alt"
@@ -109,7 +109,7 @@
               "icon": "fas fa-external-link-alt"
             },
             {
-              "name": "Peer Review Rebuttals",
+              "name": "Responding to Peer Review",
               "description": "By Prof. Matt Might",
               "url": "https://matt.might.net/articles/peer-review-rebuttals/",
               "icon": "fas fa-external-link-alt"
