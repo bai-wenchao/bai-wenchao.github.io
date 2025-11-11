@@ -12,20 +12,14 @@
             {
               "name": "How to Read a Paper",
               "description": "By Prof. Srinivasan Keshav",
-              "url": "#",
+              "url": "assets/files/awesome/howto/reading/HowtoReadPaper.pdf",
               "icon": "fas fa-file-pdf"
-            },
-            {
-              "name": "10 tips for academic talks",
-              "description": "By Prof. Matt Might",
-              "url": "https://matt.might.net/articles/academic-presentation-tips/",
-              "icon": "fas fa-presentation"
             },
             {
               "name": "Efficient Reading of Papers in Science and Technology",
               "description": "By Michael J. Hanson and Dylan J. McNamee",
-              "url": "#",
-              "icon": "fas fa-file-alt"
+              "url": "assets/files/awesome/howto/reading/efficient_reading_of_papers_in_science_and_technology.pdf",
+              "icon": "fas fa-file-pdf"
             }
           ]
         },
@@ -47,13 +41,13 @@
             {
               "name": "10 tips on how we write papers",
               "description": "By Prof. Edward H. Sargent",
-              "url": "#",
+              "url": "assets/files/awesome/howto/writing/10_tips_on_how_we_write_papers.pdf",
               "icon": "fas fa-file-pdf"
             },
             {
               "name": "Mathematical Writing",
               "description": "By Prof. Donald E. Knuth, Prof. Tracy Larrabee, and Prof. Paul M. Roberts",
-              "url": "#",
+              "url": "assets/files/awesome/howto/writing/mathwriting.pdf",
               "icon": "fas fa-file-pdf"
             },
             {
@@ -65,7 +59,7 @@
             {
               "name": "The Science of Scientific Writing",
               "description": "By George D. Gopen and Judith A. Swan",
-              "url": "#",
+              "url": "assets/files/awesome/howto/writing/The_Science_of_Scientific_Writing.pdf",
               "icon": "fas fa-file-pdf"
             },
             {
@@ -95,6 +89,12 @@
               "name": "The Art of Presentation",
               "description": "By Prof. Baochun Li",
               "url": "https://www.cs.cityu.edu.hk/~jia/research/the-art-of-presentation.pdf",
+              "icon": "fas fa-external-link-alt"
+            },
+            {
+              "name": "10 tips for academic talks",
+              "description": "By Prof. Matt Might",
+              "url": "https://matt.might.net/articles/academic-presentation-tips/",
               "icon": "fas fa-external-link-alt"
             }
           ]
