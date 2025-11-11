@@ -503,13 +503,13 @@ class ContentLoader {
     setTimeout(() => {
       const clustrmapsContainer = document.getElementById('clustrmaps-container');
       if (clustrmapsContainer) {
-        // Set container size to make the map smaller
-        clustrmapsContainer.style.maxWidth = '250px';
+        // Set container size for larger map
+        clustrmapsContainer.style.maxWidth = '640px';
         clustrmapsContainer.style.margin = '0 auto';
 
         const script = document.createElement('script');
         script.id = 'clustrmaps';
-        script.src = '//clustrmaps.com/map_v2.js?d=Kpl7cD5NrwlEv9oVnKbHEYyn6TJ3gYDgS1-uoXs9qzM&cl=ffffff&w=250';
+        script.src = '//clustrmaps.com/map_v2.js?d=Kpl7cD5NrwlEv9oVnKbHEYyn6TJ3gYDgS1-uoXs9qzM&cl=ffffff&w=640';
         script.async = true;
         clustrmapsContainer.appendChild(script);
       }
