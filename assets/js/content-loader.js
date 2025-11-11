@@ -68,18 +68,25 @@ class ContentLoader {
 
       // Merge secondary configs when they're ready
       secondaryConfigsData.then(configs => {
+        console.log('Processing secondary configs:', configs);
         configs.forEach(config => {
+          console.log('Processing config:', config.title, 'has categories:', !!config.categories);
           if (config.title === "Recent News" && config.items) {
             this.config.news = config;
+            console.log('News config merged');
           } else if (config.title === "Latest Posts" && config.items) {
             this.config.posts = config;
+            console.log('Posts config merged');
           } else if (config.title === "Awesome Resources" && config.categories) {
             this.config.awesome = config;
             console.log('Awesome config merged:', config);
           } else {
+            console.log('Merging generic config:', config.title);
             this.config = { ...this.config, ...config };
           }
         });
+        console.log('Final config keys:', Object.keys(this.config));
+        console.log('Has awesome key:', 'awesome' in this.config);
         console.log('Secondary configs merged:', this.config);
       }).catch(error => {
         console.error('Error loading secondary configs:', error);
@@ -481,7 +488,8 @@ class ContentLoader {
     if (!mainContent) return;
 
     // Wait a bit for secondary configs to be loaded
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    console.log('About to render awesome, config.awesome:', this.config?.awesome);
 
     const secondaryContent = `
       ${this.renderNews()}
