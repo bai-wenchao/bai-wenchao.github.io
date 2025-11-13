@@ -32,7 +32,7 @@
         "category": "Game Theory",
         "tags": ["Stackelberg Game", "Service Pricing"],
         "links": [
-          {"text": "Paper", "url": "/assets/files/publications/25_miniclean/paper-full.pdf"},
+          {"text": "Paper", "url": "/assets/files/publications/25_prillm/paper-full.pdf"},
           {"text": "Code", "url": "https://github.com/luck-seu/PriLLM"}
         ],
         "bibtex": "@inproceedings{guo2025prillm,\n  title={Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game},\n  author={Guo, Zhengdong and Bai, Wenchao and Jin, Jiahui},\n  booktitle={The Fortieth AAAI Conference on Artificial Intelligence},\n  year={2026}\n}"
