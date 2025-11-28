@@ -2,6 +2,12 @@
   "title": "Recent News",
   "items": [
     {
+      "date": "2025-11-14",
+      "date_display": "Nov. 14, 2025",
+      "title": "Pinned: A Potential Academic Dishonesty",
+      "content": "The First Author of our AAAI'26 paper (i.e., Zhendong) reported that this paper was revised by a HYPOCRITE (i.e., me). I'm sorry to be involved in this (potential) academic dishoinsty."
+    },
+    {
       "date": "2025-11-08",
       "date_display": "Nov. 8, 2025",
       "title": "AAAI'26 Paper Accepted",
