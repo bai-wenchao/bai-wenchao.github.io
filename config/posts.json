@@ -3,6 +3,17 @@
   "items": [
     {
       "authors": "<strong>Wenchao Bai</strong>",
+      "title": "Efficient Algorithms for Semiring Problems: An Intuitive Introduction to Functional Aggregate Queries",
+      "date": "November 29, 2025",
+      "abstract": "This tutorial introduces Functional Aggregate Queries (FAQ), a unified framework for solving computational problems over (commutative) semirings. Many computation problems share common mathematical structures and properties that enable efficient algorithms. Through examples from matrix multiplication, MapReduce, and query optimization, the tutorial shows how associativity, commutativity, and distributivity form the foundation for computational efficiency. The presentation demonstrates how diverse problems, including shortest distance computation, database queries, and satisfiability, can be expressed uniformly using semiring operations. We further shows that algorithm efficiency depends on hypergraph acyclicity, with acyclic cases enabling linear-time evaluation through local semi-join reduction.",
+      "category": "Query Evaluation",
+      "tags": ["Functional Aggregate Queries", "Semiring Problems"],
+      "links": [
+        {"text": "Slides", "url": "/assets/files/posts/2511_faq/faq.pdf"}
+      ]
+    },
+    {
+      "authors": "<strong>Wenchao Bai</strong>",
       "title": "(Neural ◦ Symbolic ◦ Neural)(Everything): The Onion Framework for Modern Query Engines",
       "date": "October 7, 2025",
       "abstract": "Academic database (DB) research must pivot from marginal RDBMS gains (\"polishing a round ball\") to find the \"New Chalice of Data,\" driven by the massive shift in funding toward AI (>$100B VC funding). Modern Query Engines must evolve away from the closed-world assumption, SQL, and relational data to embrace unstructured multi-modal data and Natural Language queries in an open-world model, shifting core capability from retrieval to reasoning.<br><br>This abstract outlines \"The Onion Framework\" (Neural ◦ Symbolic ◦ Neural) for integrating and optimizing Large Language Model (LLM)-powered data processing.<br><br>The Symbolic ◦ Neural approach focuses on steering LLM queries via explicit control under declarative frameworks (e.g., Palimpzest, ELEET). Effectiveness is enhanced using prompt engineering strategies, such as fine-grained methods for accuracy and leveraging non-LLM proxies (like k-NN) to reduce token consumption by 50%. Efficiency optimization utilizes model cascades (BARGAIN), proxy-based approximation (LOTUS), and unbiased stratified sampling for aggregation queries (UQE). These methods require user-specified logic flow.<br><br>The Neural ◦ Symbolic ◦ Neural approach focuses on automatically manipulating symbols to improve accessibility by converting Natural Language queries into formal query plans (NL2SQL) using progressive matching. Optimization strategies include exploiting independent parallelism (AOP), cost-based optimization using importance sampling for cardinality estimation (Unify), and online plan adjustment and fault tolerance (iDataLake).<br><br>Ultimately, database researchers are uniquely positioned to address LLM challenges (poor predictability, undefined correctness). Our competitive advantage lies in fundamental principles such as declarativeness, cost-based optimization, approximation guarantees, and performance optimization.",
