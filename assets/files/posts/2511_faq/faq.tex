@@ -48,7 +48,7 @@
 \newcommand{\mitred}[1]{{\color{mitred} #1}}
 
 % Title information
-\title{The Rising Sea}
+\title{The Rising Lake}
 \subtitle{An Intuitive Introduction to Functional Aggregate Queries}
 \author{Wenchao Bai}
 \institute{wbai@seu.edu.cn}
@@ -65,10 +65,13 @@
 
 \begin{block}
 
-The unknown thing to be known appeared to me as some stretch of earth or hard marl, resisting penetration ... the sea advances insensibly in silence, nothing seems to happen, nothing moves, the water is so far off you hardly hear it ... yet it finally surrounds the resistant substance.
+The unknown thing to be known appeared to me as some stretch of earth or hard marl, resisting penetration ... the sea\footnote{
+We use "The Rising Lake" instead of "The Rising Sea" as the title since FAQ spans a narrower domain than algebraic geometry.
+} advances insensibly in silence, nothing seems to happen, nothing moves, the water is so far off you hardly hear it ... yet it finally surrounds the resistant substance.
 
 \hfill --- \textit{Alexander Grothendieck}, \textit{R\'ecoltes et semailles} (1985--1987)
 \end{block}
+
 \end{frame}
 
 
@@ -104,7 +107,7 @@ The unknown thing to be known appeared to me as some stretch of earth or hard ma
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Example: MapReduce}
+\begin{frame}{Example: Summing via MapReduce}
 \begin{itemize}
   \item {\bf Question}: Sum over a large dataset distributed across nodes
   \item {\bf Technique}: Compute partial sums parallelly at different nodes, then aggregate:

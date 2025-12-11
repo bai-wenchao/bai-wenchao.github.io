@@ -3,7 +3,7 @@
   "items": [
     {
       "authors": "<strong>Wenchao Bai</strong>",
-      "title": "The Rising Sea: An Intuitive Introduction to Functional Aggregate Queries",
+      "title": "The Rising Lake: An Intuitive Introduction to Functional Aggregate Queries",
       "date": "November 29, 2025",
       "abstract": "This tutorial introduces Functional Aggregate Queries (FAQ), a unified framework for solving computational problems over (commutative) semirings. Many computation problems share common mathematical structures and properties that enable efficient algorithms. Through examples from matrix multiplication, MapReduce, and query optimization, the tutorial shows how associativity, commutativity, and distributivity form the foundation for computational efficiency. The presentation demonstrates how diverse problems, including shortest distance computation, database queries, and satisfiability, can be expressed uniformly using semiring operations. We further shows that algorithm efficiency depends on hypergraph acyclicity, with acyclic cases enabling linear-time evaluation through local semi-join reduction.",
       "category": "Query Evaluation",
