@@ -25,19 +25,6 @@
     "show_all_link": "https://scholar.google.com/citations?user=DurVj1gAAAAJ&hl=en",
     "items": [
       {
-        "authors": "Zhengdong Guo, <strong>Wenchao Bai</strong>, Jiahui Jin*",
-        "title": "Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game",
-        "venue": "<em>The 40th Annual AAAI Conference on Artificial Intelligence</em>, 2026",
-        "abstract": "The proliferation of Large Language Models (LLMs) has established LLM routing as a standard service delivery mechanism, where users select models based on cost, Quality of Service (QoS), among other things. However, optimal pricing in LLM routing platforms requires precise modeling for dynamic service markets, and solving this problem in real time at scale is computationally intractable. In this paper, we propose PriLLM, a novel practical and scalable solution for real-time dynamic pricing in competitive LLM routing. PriLLM models the service market as a Stackelberg game, where providers set prices and users select services based on multiple criteria. To capture real-world market dynamics, we incorporate both objective factors (e.g., cost, QoS) and subjective user preferences into the model. For scalability, we employ a deep aggregation network to learn provider abstraction that preserve user-side equilibrium behavior across pricing strategies. Moreover, PriLLM offers interpretability by explaining its pricing decisions. Empirical evaluation on real-world data shows that PriLLM achieves over 95% of the optimal profit while only requiring less than 5% of the optimal solution's computation time.",
-        "category": "Game Theory",
-        "tags": ["Stackelberg Game", "Service Pricing"],
-        "links": [
-          {"text": "Paper", "url": "https://arxiv.org/abs/2511.09062"},
-          {"text": "Code", "url": "https://github.com/luck-seu/PriLLM"}
-        ],
-        "bibtex": "@inproceedings{guo2025prillm,\n  title={Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game},\n  author={Guo, Zhengdong and Bai, Wenchao and Jin, Jiahui},\n  booktitle={The Fortieth AAAI Conference on Artificial Intelligence},\n  year={2026}\n}"
-      },
-      {
         "authors": "<strong>Wenchao Bai</strong>, Wenfei Fan, Shuhao Liu, Kehan Pang, Xiaoke Zhu, and Jiahui Jin*.",
         "title": "Rule-Based Graph Cleaning with GPUs on a Single Machine",
         "venue": "<em>Proceedings of the ACM Management of Data</em>, 2025",
@@ -66,18 +53,6 @@
           {"text": "Docker Image", "url": "https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general"}
         ],
         "bibtex": "@inproceedings{miniclean_sigmod_demo25,\n  title={MiniClean: A Single-Machine System for Cleaning Big Graphs},\n  author={Bai, Wenchao and Fan, Wenfei and Jin, Jiahui and Li, Daji and Li, Jian and Liu, Shuhao and Ouyang, Mingliang and Yuan, Qiang},\n  booktitle={Companion of the 2025 International Conference on Management of Data},\n  pages={27--30},\n  year={2025}\n}"
-      },
-      {
-        "authors": "Jiahui Jin*, Zhendong Guo, <strong>Wenchao Bai</strong>, Biwei Wu, Xiang Liu, and Weiwei Wu.",
-        "title": "Congestion-Aware Stackelberg Pricing Game in Urban Internet-of-Things Networks: A Case Study",
-        "venue": "<em>Computer Networks</em>, 2024",
-        "abstract": "We consider a one-leader multi-follower Stackelberg pricing game in urban Internet-of-Things networks. The leader manages multiple services and sets service prices to maximize profit, while followers seek the most cost-effective services, taking into account service prices, service congestion, and individual locations. Existing approaches often simplify the game process by neglecting followers' locations, but they are not applicable to real-world complex spatial distributions. In this paper, we focus on the congestion-aware Stackelberg pricing game in urban Internet-of-Things networks, using electric vehicle charging as a case study. The game is reformulated as a mathematical program with equilibrium constraints (MPEC) that considers both congestion effects and followers' spatial distributions. To solve the MPEC, we introduce the Segmentation-based Pricing with ITERative Optimization (SPITER) algorithm, which converges to a local maximum. Additionally, optimization techniques are developed to improve the performance of solving SPITER in urban environments. We evaluate the performance of SPITER using extensive experiments with two real-life urban datasets, demonstrating the advantages of our model and illustrating SPITER's effectiveness and convergence.",
-        "category": "Game Theory",
-        "tags": ["Stackelberg Game", "Service Pricing"],
-        "links": [
-          {"text": "Paper", "url": "/assets/files/publications/24_spiter/paper.pdf"}
-        ],
-        "bibtex": "@article{spiter_cn24,\n  title={Congestion-Aware Stackelberg Pricing Game in Urban Internet-of-Things Networks: A Case Study},\n  author={Jin, Jiahui and Guo, Zhendong and Bai, Wenchao and Wu, Biwei and Liu, Xiang and Wu, Weiwei},\n  journal={Computer Networks},\n  volume={246},\n  pages={110405},\n  year={2024},\n  publisher={Elsevier}\n}"
       }
     ]
   }
