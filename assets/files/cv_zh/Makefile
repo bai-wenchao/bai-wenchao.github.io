@@ -1,4 +1,4 @@
-TARGET = cv
+TARGET = cv_zh
 PDF = $(TARGET).pdf
 TEX = $(TARGET).tex
 LATEXMK_FLAGS = 
@@ -17,9 +17,9 @@ clean:
 		  $(TARGET)-blx.bib \
 		  $(TARGET).bbl \
 		  $(TARGET).run.xml
+
 distclean:
-	rm -f $(TARGET).pdf \
-		  $(TARGET).aux \
+	rm -f $(TARGET).aux \
 		  $(TARGET).log \
 		  $(TARGET).out \
 		  $(TARGET).fdb_latexmk \
@@ -27,6 +27,8 @@ distclean:
 		  $(TARGET).synctex.gz \
 		  $(TARGET)-blx.bib \
 		  $(TARGET).bbl \
-		  $(TARGET).run.xml
+		  $(TARGET).run.xml \
+		  $(TARGET).synctex* \
+		  $(TARGET).pdf \
 
 .PHONY: clean
