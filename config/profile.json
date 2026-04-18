@@ -35,6 +35,7 @@
   "cv": {
     "title": "Curriculum Vitae",
     "description": "For a comprehensive overview of my academic background, research experience, publications, and professional activities, please refer to my curriculum vitae.",
-    "cv_link": "/assets/files/cv/cv.pdf"
+    "cv_link": "/assets/files/cv/cv.pdf",
+    "cv_zh_link": "/assets/files/cv_zh/cv_zh.pdf"
   }
 }

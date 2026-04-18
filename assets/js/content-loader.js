@@ -278,8 +278,11 @@ class ContentLoader {
             <p>${cv.description}</p>
             <div class="cv-links">
               <a href="${cv.cv_link}" class="btn" target="_blank">
-                <i class="fas fa-download"></i> Download CV (PDF)
+                <i class="fas fa-download"></i> Download CV (English)
               </a>
+              ${cv.cv_zh_link ? `<a href="${cv.cv_zh_link}" class="btn" target="_blank">
+                <i class="fas fa-download"></i> Download CV (中文)
+              </a>` : ''}
             </div>
           </div>
         </div>
