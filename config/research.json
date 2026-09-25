@@ -40,19 +40,27 @@
         "bibtex": "@article{miniclean_sigmod25,\n  title={Rule-Based Graph Cleaning with GPUs on a Single Machine},\n  author={Bai, Wenchao and Fan, Wenfei and Liu, Shuhao and Pang, Kehan and Zhu, Xiaoke and Jin, Jiahui},\n  journal={Proceedings of the ACM on Management of Data},\n  volume={3},\n  number={3},\n  pages={1--27},\n  year={2025},\n  publisher={ACM New York, NY, USA}\n}"
       },
       {
-        "authors": "<strong>Wenchao Bai</strong>, Wenfei Fan, Jiahui Jin, Daji Li, Jian Li, Shuhao Liu, Mingliang Ouyang, and Qiang Yuan.",
-        "title": "MiniClean: A Single-Machine System for Cleaning Big Graphs",
-        "venue": "<em>SIGMOD Demo Proposals</em>, 2025",
-        "abstract": "We demonstrate MiniClean, a single-machine system for cleaning large-scale graphs. MiniClean adopts a rule-based approach that unifies logic reasoning and machine learning, and supports rule discovery, error detection and error correction. To cope with repeated graph pattern matching and large intermediate results, MiniClean proposes (1) a pipelined workflow that coordinates CPU, GPU and I/O operations, (2) memory footprint reduction by bundled processing and data compression, and (3) a multi-mode parallel model that combines SIMD, pipelined, and independent parallelism to maximize CPU--GPU synergy. We demonstrate how MiniClean cleans real-life billion-scale graphs and outperforms a SOTA multi-machine system with a 32-node cluster by at least 8.09X.",
-        "category": "Data Quality",
-        "tags": ["Parallel System", "Single Machine System", "GPU Acceleration", "Entity Resolution", "Conflict Resolution"],
+        "authors": "Zhengdong Guo, <strong>Wenchao Bai</strong>, Jiahui Jin*",
+        "title": "Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game",
+        "venue": "<em>The 40th Annual AAAI Conference on Artificial Intelligence</em>, 2026",
+        "abstract": "The proliferation of Large Language Models (LLMs) has established LLM routing as a standard service delivery mechanism, where users select models based on cost, Quality of Service (QoS), among other things. However, optimal pricing in LLM routing platforms requires precise modeling for dynamic service markets, and solving this problem in real time at scale is computationally intractable. In this paper, we propose PriLLM, a novel practical and scalable solution for real-time dynamic pricing in competitive LLM routing. PriLLM models the service market as a Stackelberg game, where providers set prices and users select services based on multiple criteria. To capture real-world market dynamics, we incorporate both objective factors (e.g., cost, QoS) and subjective user preferences into the model. For scalability, we employ a deep aggregation network to learn provider abstraction that preserve user-side equilibrium behavior across pricing strategies. Moreover, PriLLM offers interpretability by explaining its pricing decisions. Empirical evaluation on real-world data shows that PriLLM achieves over 95% of the optimal profit while only requiring less than 5% of the optimal solution's computation time.",
+        "category": "Game Theory",
+        "tags": ["Stackelberg Game", "Service Pricing"],
         "links": [
-          {"text": "Paper", "url": "/assets/files/publications/25_miniclean_demo/paper.pdf"},
-          {"text": "Slides", "url": "/assets/files/publications/25_miniclean/slides.pdf"},
-          {"text": "Poster", "url": "/assets/files/publications/25_miniclean/poster.pdf"},
-          {"text": "Docker Image", "url": "https://hub.docker.com/repository/docker/wenchaobai/miniclean_gpu/general"}
+          {"text": "Paper", "url": "https://arxiv.org/abs/2511.09062"},
+          {"text": "Code", "url": "https://github.com/luck-seu/PriLLM"}
         ],
-        "bibtex": "@inproceedings{miniclean_sigmod_demo25,\n  title={MiniClean: A Single-Machine System for Cleaning Big Graphs},\n  author={Bai, Wenchao and Fan, Wenfei and Jin, Jiahui and Li, Daji and Li, Jian and Liu, Shuhao and Ouyang, Mingliang and Yuan, Qiang},\n  booktitle={Companion of the 2025 International Conference on Management of Data},\n  pages={27--30},\n  year={2025}\n}"
+        "bibtex": "@inproceedings{guo2025prillm,\n  title={Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game},\n  author={Guo, Zhengdong and Bai, Wenchao and Jin, Jiahui},\n  bookttle={The Fortieth AAAI Conference on Artificial Intelligence},\n  year={2026}\n}"
+      },
+      {
+        "authors": "Yi Hong, <strong>Wenchao Bai</strong>, Jiaqi Jiang, Siyuan Huang, and Jiahui Jin*.",
+        "title": "Effective Knowledge Conflict Detection via Joint Agentic Optimization",
+        "venue": "<em>The Fortieth Annual Conference on Neural Information Processing Systems</em>, 2026",
+        "abstract": "Knowledge conflict detection is a fundamental challenge for large language model (LLM) systems that rely on external knowledge. Existing approaches address this problem either with end-to-end supervised models or with multi-stage pipelines dependent on fixed heuristics. However, supervised models often generalize poorly to diverse conflict patterns, whereas heuristic pipelines rely on fixed rules and introduce considerable computational overhead. To overcome these limitations, we propose Grouping and Conflict Detection (GCD), a two-stage agentic framework for knowledge conflict detection that aligns the detection process with the inherent sparsity of knowledge conflicts, thereby reducing the decision space and enabling fine-grained conflict detection. GCD decomposes knowledge conflict detection into two subtasks and employs two cooperative agents to address them: a Knowledge Grouping Agent (G-Agent), which creates conflict-preserving groups of textual units with potential conflicts, and an Intra-group Conflict Detection Agent (D-Agent), which detects conflicts within each group. The G-Agent's grouping policy is not fixed in advance but is jointly trained with D-Agent via a shared global reward, enabling grouping to be explicitly optimized for accurate detection rather than relying on fixed heuristics. Extensive experiments on five benchmarks demonstrate that GCD consistently outperforms SOTA methods, while reducing inference latency and token consumption.",
+        "category": "Data Agent",
+        "tags": ["Conflict Detection", "Post Training"],
+        "links": [],
+        "bibtex": "@inproceedings{hong2026gcd,\n  title={Effective Knowledge Conflict Detection via Joint Agentic Optimization},\n  author={Hong, Yi and {\\bf Bai}, {\\bf Wenchao} and Jiang, Jiaqi and Huang, Siyuan and Jin\\textsuperscript{*}, Jiahui},\n  booktitle={The Fortieth Annual Conference on Neural Information Processing Systems},\n  year={2026},\n  url={https://openreview.net/forum?id=9K2Q4nOBG5}\n}"
       }
     ]
   }
