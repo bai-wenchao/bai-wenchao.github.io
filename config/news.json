@@ -2,10 +2,22 @@
   "title": "Recent News",
   "items": [
     {
+      "date": "2026-09-25",
+      "date_display": "Sep. 25, 2026",
+      "title": "NeurIPS'26 Paper Accepted",
+      "content": "Our paper \"Effective Knowledge Conflict Detection via Joint Agentic Optimization\" was accepted at NeurIPS 2026 Main Track as poster (25.7% acceptance rate). Congrats to Yi!"
+    },
+    {
       "date": "2026-05-29",
       "date_display": "May 29, 2026",
       "title": "Internship at SICS Concluded",
       "content": "Concluded my three-year research internship at the Shenzhen Institute of Computing Sciences (SICS). Heartfelt thanks to every member of the Fundamental Research Center for the help in both my research and my everyday life."
+    },
+    {
+      "date": "2025-11-08",
+      "date_display": "Nov. 8, 2025",
+      "title": "AAAI'26 Paper Accepted",
+      "content": "Our paper \"Pricing Online LLM Services with Data-Calibrated Stackelberg Routing Game\" was accepted by AAAI for oral presentation (17.6% acceptance rate)."
     },
     {
       "date": "2025-10-16",
