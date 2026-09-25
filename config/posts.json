@@ -3,6 +3,18 @@
   "items": [
     {
       "authors": "<strong>Wenchao Bai</strong>",
+      "title": "A Theoretical Companion to Database Research",
+      "date": "September 19, 2026",
+      "abstract": "How do database researchers actually use theory? This lecture note answers with data: a full-corpus survey of all 385 SIGMOD 2026 research articles, distilled into 13 technique chapters that each teach one theoretical tool through real theorems proved in the corpus — from reductions and concentration inequalities to coresets, communication complexity, and online decisions.",
+      "category": "Database Theory",
+      "tags": ["Database Theory", "Lecture Notes"],
+      "links": [
+        {"text": "PDF", "url": "https://github.com/bai-wenchao/db-theory-companion/releases/download/v1.0/A-Theoretical-Companion-to-Database-Research.pdf"},
+        {"text": "Code", "url": "https://github.com/bai-wenchao/db-theory-companion/"}
+      ]
+    },
+    {
+      "authors": "<strong>Wenchao Bai</strong>",
       "title": "A Field Guide to Claude Code's Spinner Verbs",
       "date": "August 9, 2026",
       "abstract": "These interactive slides explore the rotating \"spinner verbs\" displayed by Claude Code's CLI while it works — a curated list of 187 words cycling through the loading animation, from the earnest (Pondering, Computing) to the absurd (Flibbertigibbeting, Prestidigitating). The deck organizes the full inventory into 12 thematic categories — Cognition, Culinary, Science, Magic, Whimsy, Easter Eggs, and more — each with IPA pronunciation, Chinese glosses, and etymological notes for the most memorable entries (Clauding, Reticulating splines, Quantumizing).",
